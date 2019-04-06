@@ -1,0 +1,23 @@
+{
+  "name": "moba_shop",
+  "version": "1.0.0",
+  "description": "CS546 final project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenjiTheC/MOBA_Shop.git"
+  },
+  "author": "Liu, Siyuan, Jake, Benji",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenjiTheC/MOBA_Shop/issues"
+  },
+  "homepage": "https://github.com/BenjiTheC/MOBA_Shop#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3"
+  }
+}
