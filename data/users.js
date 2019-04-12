@@ -1,5 +1,6 @@
 const mongoCollections = require("./collections");
 const users = mongoCollections.users;
+const {ObjectId} = require('mongodb');
 
 const exportedMethod = {
 
@@ -10,9 +11,11 @@ const exportedMethod = {
     },
 
     async getUserById(id){
+        //console.log(ObjectId.isValid(id))
         if (!id) throw "you must provide an id to search for"
+        if (!ObjectId.isValid(id)) throw "invalid input id"
         const userCollection = await users();
-        const user = await userCollection.findOne({_id: id})
+        const user = await userCollection.findOne({_id: ObjectId(id)})
         if (user ===null) throw "no user with that id"
         return user
     },
