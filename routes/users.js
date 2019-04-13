@@ -13,7 +13,8 @@ router.get("/", async (req, res) => {
 
         res.json(userList)
     }catch (e) {
-        res.status(500).send();
+        res.sendStatus(500);
+        return;
     }
 });
 
@@ -26,6 +27,7 @@ router.get("/:id", async (req, res) => {
         res.json(user)
     }catch (e) {
         res.status(404).json({ message: "User not found" });
+        return;
     }
 });
 
@@ -53,6 +55,58 @@ router.post("/", async (req, res) => {
         res.json(newUser);
     } catch (e) {
         res.sendStatus(500);
+        return;
     }
 });
+
+router.delete("/:id", async (req, res) => {
+    try{
+        await userData.getUserById(req.params.id)
+    }catch (e) {
+        res.status(404).json({ error: "User not found" })
+    }
+
+    try{
+        const user =await userData.getUserById(req.params.id)
+        //to be implemented
+        await userData.deleteUser(req.params.id)
+        res.json(user)
+        return;
+    }catch (e) {
+        res.sendStatus(500);
+        return;
+    }
+});
+
+router.put("/:id", async (req,res) => {
+
+    const inputInfo = req.body
+
+    if (!inputInfo) {
+        res.status(400).json({error: "You must provide data to update a user"});
+        return;
+    }
+    if (!inputInfo.userInfo.name && !inputInfo.userInfo.address && !inputInfo.email) {
+        res.status(400).json({error: "you must provide a name or address or email to be updated"});
+        return;
+    }
+    try{
+        await userData.getUserById(req.params.id)
+    }catch (e) {
+        res.status(404).json({error: "User not found"});
+        return;
+    }
+    try{
+        const updatedUser = await userData.updateUser(req.params.id, inputInfo)
+        //to be implemented
+
+        res.json(updatedUser)
+    }catch (e) {
+        res.sendStatus(500)
+    }
+
+})
+
+
+
 module.exports = router;
