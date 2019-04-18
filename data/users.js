@@ -1,7 +1,7 @@
 const mongoCollections = require("./collections");
 const users = mongoCollections.users;
 const {ObjectId} = require('mongodb');
-var dot = require('mongo-dot-notation')
+const dot = require('mongo-dot-notation')
 
 const exportedMethod = {
 
