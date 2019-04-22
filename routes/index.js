@@ -8,6 +8,10 @@ const constructorMethod = app => {
     app.use("/users", userRoutes);
     app.use("/search", searchRoutes);
 
+    app.get("/demo", (req, res) => {
+        res.render('template/codepen_demo');
+    })
+
     app.use("*", (req, res) => {
         res.status(404).json({ error: "Page Not found" });
     });
