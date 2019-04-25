@@ -38,8 +38,13 @@ a:link {
     text-decoration-line: none;
 }
 
+a:visited {
+    color: whitesmoke;
+    text-decoration-line: underline;
+}
+
 a img:hover {
-    opacity: 0.5;
+    border: 2px solid white;
 }
 
 a p:hover {
