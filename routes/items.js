@@ -2,6 +2,19 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const itemData = data.items;
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./public/uploads");
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname)
+    }
+});
+
+const upload = multer({storage: storage})
+//can add limit for image here
+
 
 router.get("/", async (req, res) => {
     try{
@@ -30,7 +43,9 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.post("/", async (req,res) => {
+router.post("/", upload.single("itemImage"), async (req,res) => {
+    //console.log(req.file)
+    //console.log(req.body)
     const newItemInfo = req.body;
 
     if (!newItemInfo.ownerId) {
@@ -41,13 +56,14 @@ router.post("/", async (req,res) => {
         res.status(400).json({ error: "You must provide the amount to add a item" });
         return;
     }
-    if (!newItemInfo.information.description) {
+    if (!newItemInfo.description) {
         res.status(400).json({ error: "You must provide the description to add a item" });
         return;
     }
-    if (!newItemInfo.information.image) {
-        res.status(400).json({ error: "You must provide the image url to add a item" });
-        return;
+
+    newItemInfo.information = {
+        description: newItemInfo.description,
+        image: req.file.path.replace(/\\/g, "/") //get path here
     }
 
     try{
