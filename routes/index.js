@@ -1,9 +1,10 @@
 const userRoutes = require("./users-data-test");
 const searchRoutes = require("./search");
-//const itemRoutes = require("./posts")
+const itemRoutes = require("./items")
 
 const constructorMethod = app => {
     app.use("/users", userRoutes);
+    app.use("/items", itemRoutes);
     app.use("/search", searchRoutes);
     //app.use("/items", itemRoutes);
     app.get('/', async (req, res) => {
