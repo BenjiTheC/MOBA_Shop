@@ -15,7 +15,7 @@ app.set("view engine", "handlebars");
 
 configRoutes(app);
 
-app.listen(3000, () => {
+app.listen(8080, () => {
     console.log('MOBA shop web app server running');
-    console.log('Routes on http://localhost:3000'); // the url will be changed in the future
+    console.log('Routes on '); // the url will be changed in the future
 });
