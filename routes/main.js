@@ -28,7 +28,7 @@ function itemGenerator(repeat_time) {
 
 router.get('/', async (req, res) => {
   const itemList = itemGenerator(11);
-  return res.render('template/home', { title: "MOBA Shop", itemList: itemList, isLoggedIn: false, userInfo: MOCK_USER_BENJI });
+  return res.render('template/home', { title: "MOBA Shop", itemList: itemList, isLoggedIn: true, userInfo: MOCK_USER_BENJI });
 })
 
 module.exports = router;
