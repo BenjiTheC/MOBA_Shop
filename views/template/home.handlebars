@@ -1,3 +1,35 @@
-<section>
-  <h1>Empty Section</h1>
+<section class="container row my-md-2 mx-auto" id="home-page">
+
+  <div class="col-md-8 col-12 mx-0" id="items-grid">
+
+    <div class="row">
+      {{#each itemList}}
+      <div class="col-lg-4 col-sm-6 col-12 p-1">
+        <div class="card">
+          <img src="{{this.itemPic}}" class="card-img-top" alt="item-pic">
+          <div class="card-body p-2">
+            <h6 class="card-title my-1">{{this.itemName}}</h6>
+            <p class="card-text my-1">{{this.itemPrice}} MBCoin</p>
+            <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
+            <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    
+  </div>
+
+  <div class="col-md-4 col-0 mx-0 pt-1" id="user-info">
+    <div class="card pt-3 px-3">
+      <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="https://via.placeholder.com/800x800.png?text=User+Picture">
+      <div class="card-body p-2 mt-2">
+        <h5 class="card-title mb-2">Benji</h5>
+        <p class="card-text mb-2">Asset: 65536 <span class="badge badge-pill badge-dark">MBCoin</span></p>
+      </div>
+    </div>
+
+
+  </div>
+
 </section>

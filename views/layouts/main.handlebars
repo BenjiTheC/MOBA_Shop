@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{title}}</title>
-  {{!-- <link rel="stylesheet" type="text/css" href="/public/css/main.css"> --}}
+  <link rel="stylesheet" type="text/css" href="/public/css/main.css">
   {{!-- <link rel="stylesheet" type="text/css" href="/public/css/codepen_demo.css"> --}}
   <link rel="shortcut icon" href="">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-  <nav class="navbar sticky-top navbar-expand-md bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg bg-dark">
 
     <div class="container">
 
@@ -21,15 +21,21 @@
         <a class="navbar-brand" href="/"><img src="/public/img/logo.png" alt="" style="width:145px;height:auto" class="d-inline-block align-center"></a>
       </div>
 
+      {{!-- Toggler when the screen is small --}}
       <button class="navbar-toggler btn btn-outline-light" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon fas fa-align-justify"></i></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbar-content">
+
         {{!-- Search Bar --}}
         <form class="form-inline col-lg-8 justify-content-center" method="GET" action="/search">
-            <input class="form-control col-lg-11" type="search" placeholder="Search" aria-label="Search" name="searchKeyword">
-            <button class="btn btn-outline-light" type="submit"><i class="fa fa-search"></i></button>
+          <div class="input-group col-12">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="searchKeyword">
+            <div class="input-group-append">
+              <button class="btn btn-outline-light" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
         </form>
 
         {{!-- Nav Bar Tags --}}
@@ -41,6 +47,7 @@
             <a class="nav-link btn btn-outline-light" href="#">Sign Up</a>
           </li>
         </ul>
+
       </div>
 
     </div>
