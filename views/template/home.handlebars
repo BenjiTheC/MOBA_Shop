@@ -20,13 +20,23 @@
     
   </div>
 
-  <div class="col-md-4 col-0 mx-0 pt-1" id="user-info">
-    <div class="card pt-3 px-3">
-      <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="https://via.placeholder.com/800x800.png?text=User+Picture">
+  <div class="col-md-4 col-0 mx-0 pt-1">
+    <div class="card pt-3 px-3" id="user-info">
+    {{#if isLoggedIn}}
+      <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="{{userInfo.userPic}}">
       <div class="card-body p-2 mt-2">
-        <h5 class="card-title mb-2">Benji</h5>
-        <p class="card-text mb-2">Asset: 65536 <span class="badge badge-pill badge-dark">MBCoin</span></p>
+        <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
+        <p class="card-text mb-2">Asset: {{userInfo.userAsset}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
       </div>
+    {{else}}
+      <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="https://via.placeholder.com/512x512.png?text=Not+Logged+In!!">
+      <div class="card-body p-2 mt-2 row justify-content-around">
+        <a class="btn btn-dark" href="#">Log In</a>
+        <a class="btn btn-dark" href="#">Sign Up</a>
+      </div>
+      
+      
+    {{/if}}
     </div>
 
 
