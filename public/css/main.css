@@ -14,8 +14,8 @@ hr {
     overflow: visible; /* For IE */
     padding: 0;
     border: none;
-    border-top: medium double #333;
-    color: #333;
+    border-top: medium double #f8f9fa;
+    color: #f8f9fa;
     text-align: center;
 }
 hr:after {
@@ -25,9 +25,15 @@ hr:after {
     top: -0.7em;
     font-size: 1.5em;
     padding: 0 0.25em;
-    background: white;
+    background: #343a40;
 }
 
 .icon-class {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+/* override certain feature of Bootstrap */
+
+.list-group-flush .list-group-item {
+    border-top: 1px solid #f8f9fa
 }
