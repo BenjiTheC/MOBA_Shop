@@ -20,6 +20,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try{
+        console.log(`in GET /users/${req.params.id}`);
+        return res.status(200).json({ status: 200, msg: "hit the route successfully!", currentRoute: `GET /users/${req.params.id}` })
+
         const user = await userData.getUserById(req.params.id)
         //to be implemented
         //...

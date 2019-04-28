@@ -34,6 +34,6 @@ hr:after {
 
 /* override certain feature of Bootstrap */
 
-.list-group-flush .list-group-item {
+#footer-brand {
     border-top: 1px solid #f8f9fa
 }

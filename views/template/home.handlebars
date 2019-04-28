@@ -6,9 +6,13 @@
       {{#each itemList}}
       <div class="col-lg-4 col-sm-6 col-12 p-1">
         <div class="card">
-          <img src="{{this.itemPic}}" class="card-img-top" alt="item-pic">
+          <a href="/items/{{this.itemId}}" style="color: inherit">
+            <img src="{{this.itemPic}}" class="card-img-top" alt="item-pic">
+          </a>
           <div class="card-body p-2">
-            <h6 class="card-title my-1">{{this.itemName}}</h6>
+            <a href="/items/{{this.itemId}}" style="color: inherit">
+              <h6 class="card-title my-1">{{this.itemName}}</h6>
+            </a>
             <p class="card-text my-1">{{this.itemPrice}} MBCoin</p>
             <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
             <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
@@ -21,24 +25,31 @@
   </div>
 
   <div class="col-md-4 mx-0 pt-1">
-    <div class="card pt-3 px-3 col-10 mx-auto" id="user-info">
     {{#if isLoggedIn}}
-      <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="{{userInfo.userPic}}">
+    <div class="card pt-3 px-3 col-10 mx-auto" id="user-info">
+      <a href="/users/{{userInfo.userId}}">
+        <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="{{userInfo.userPic}}">
+      </a>
       <div class="card-body p-2 mt-2">
-        <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
+        <a href="/users/{{userInfo.userId}}" style="color: inherit">
+          <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
+        </a>
         <p class="card-text mb-2">Asset: {{userInfo.userAsset}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
       </div>
-    {{else}}
-      <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="https://via.placeholder.com/512x512.png?text=Not+Logged+In!!">
-      <div class="card-body p-2 mt-2 row justify-content-around">
-        <a class="btn btn-dark" href="#">Log In</a>
-        <a class="btn btn-dark" href="#">Sign Up</a>
-      </div>
-      
-      
-    {{/if}}
     </div>
+    {{/if}}
 
+    {{!-- <div class="row col-11 mx-auto"> --}}
+      <div class="card col-6 border-0 mt-2" id="tag-lol">
+        <img class="card-img-top bg-light" alt="tag-lol" src="/public/img/tag-lol.png">
+        <a href="/items/tag/lol" class="stretched-link"></a>
+      </div>
+
+      <div class="card col-6 border-0 mt-2" id="tag-dota2">
+        <img class="card-img-top bg-light" alt="tag-dota2" src="/public/img/tag-dota2.png">
+        <a href="/items/tag/dota2" class="stretched-link"></a>
+      </div>
+    {{!-- </div> --}}
 
   </div>
 

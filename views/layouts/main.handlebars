@@ -12,47 +12,60 @@
   <link rel="stylesheet" type="text/css" href="/public/css/main.css">
 </head>
 <body>
-  <nav class="navbar sticky-top navbar-expand-lg bg-dark">
+  <header>
+    <nav class="navbar sticky-top navbar-expand-lg bg-dark">
 
-    <div class="container">
+      <div class="container">
 
-      {{!-- MOBA SHOP LOGO --}}
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/"><img src="/public/img/logo.png" alt="" style="width:145px;height:auto" class="d-inline-block align-center"></a>
-      </div>
+        {{!-- MOBA SHOP LOGO --}}
+        <div class="navbar-header">
+          <a class="navbar-brand mx-auto" href="/"><img src="/public/img/logo.png" alt="" style="width:145px;height:auto"></a>
+        </div>
 
-      {{!-- Toggler when the screen is small --}}
-      <button class="navbar-toggler btn btn-outline-light" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon fas fa-align-justify"></i></span>
-      </button>
+        {{!-- Toggler when the screen is small --}}
+        <button class="navbar-toggler btn btn-outline-light" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon fas fa-bars"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbar-content">
+        <div class="collapse navbar-collapse" id="navbar-content">
 
-        {{!-- Search Bar --}}
-        <form class="form-inline col-lg-8 justify-content-center" method="GET" action="/search">
-          <div class="input-group col-12">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="searchKeyword">
-            <div class="input-group-append">
-              <button class="btn btn-outline-light icon-class" type="submit"><i class="fa fa-search"></i></button>
+          {{!-- Search Bar --}}
+          <form class="form-inline col-lg-8 justify-content-center" method="GET" action="/search">
+            <div class="input-group col-12">
+              <input class="form-control border-white" type="search" placeholder="Search" aria-label="Search" name="searchKeyword">
+              <div class="input-group-append">
+                <button class="btn btn-outline-light icon-class" type="submit"><i class="fa fa-search"></i></button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
 
-        {{!-- Nav Bar Tags --}}
-        <ul class="nav navbar-nav col-lg-3">
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light" href="#">Log In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-light" href="#">Sign Up</a>
-          </li>
-        </ul>
+          {{!-- Nav Bar Tags --}}
+          <ul class="nav navbar-nav ml-auto">
+            {{#if isLoggedIn}}
+            <li class="nav-item">
+              <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}/cart">
+                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light" id="items-in-cart">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}"><i class="fas fa-user-alt"></i></a>
+            </li>
+            {{else}}
+            <li class="nav-item">
+              <a class="nav-link text-light" href="/authen/login">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="/authen/signup">Sign Up</a>
+            </li>
+          {{/if}}
+          </ul>
+
+        </div>
 
       </div>
 
-    </div>
-
-  </nav>
+    </nav>
+  </header>
   
   {{{body}}}
   
@@ -61,7 +74,7 @@
     <div class="container">
       <ul class="list-group list-group-flush">
         <li class="list-group-item bg-dark text-center">Siyuan He  |  Liu Yang  |  Jake Lorvin  |  Yinghui Cai</li>
-        <li class="list-group-item bg-dark text-center"><h2>MOBA Shop</h2></li>
+        <li class="list-group-item bg-dark text-center" id="footer-brand"><h2>MOBA Shop</h2></li>
       </ul>
     </div>
     <hr class="text-light"/>
