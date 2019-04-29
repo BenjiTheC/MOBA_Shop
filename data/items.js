@@ -5,6 +5,10 @@ const dot = require('mongo-dot-notation');
 
 const exportedMethod = {
 
+    async searchByKeyword(){
+
+    },
+
     async getAllItems(){
 
         //need to implement return item information with author
@@ -22,17 +26,19 @@ const exportedMethod = {
         return item
     },
 
-    async addItem(ownerId, amount, information) {
+    async addItem(ownerId, information, tag) {
         if (!ownerId || !ObjectId.isValid(ownerId)) throw "you must provide a valid owner id"
-        if (!amount) throw "you must provide an amount"
+        if (!information.name) throw "you must provide a name"
         if (!information.description) throw "you must provide a description"
         if (!information.image) throw "you must provide a url for image"
+        if (!information.price) throw "you must provide a url for image"
+        if (!information.amount) throw "you must provide a url for image"
+        if (!tag) throw "you must provide a tag"
         const itemCollection = await items()
         let newItem = {
             ownerId: ownerId,
-            amount: amount,
             information: information,
-            isPurchased: false
+            tag: tag
         }
         const insertInfo = await itemCollection.insertOne(newItem)
         if (insertInfo.insertedCount === 0) throw "can not add item"
