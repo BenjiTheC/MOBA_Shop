@@ -65,7 +65,10 @@ const exportedMethod = {
         const itemCollection = await items();
         const item = await itemCollection.findOne({_id: ObjectId(id)})
         if (item === null) throw "no item with that id"
-        return item
+        const temp = []
+        temp.push(item)
+        const process = await this.addOwnerInfoToItem(temp)
+        return process[0]
     },
 
     async addItem(ownerId, information, tag) {

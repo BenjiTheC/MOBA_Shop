@@ -33,6 +33,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try{
         const item = await itemData.getItemById(req.params.id)
+
         //to be implemented
         //...
         //res.render()
