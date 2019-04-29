@@ -1,12 +1,54 @@
 const mongoCollections = require("./collections");
 const items = mongoCollections.items;
+const users = require("./users");
 const {ObjectId} = require('mongodb');
 const dot = require('mongo-dot-notation');
 
 const exportedMethod = {
 
-    async searchByKeyword(){
+    async searchByKeyword(keywordStr){
+        if (!keywordStr) throw "you must provide a keyword string to search for"
+        let keywordArr = keywordStr.split(" ")
 
+        const allItems = await this.getAllItems();
+
+        let itemMatched = []
+        const arrLength = allItems.length
+        for (let i = 0;i < arrLength; i ++){
+            let itemName = allItems[i].information.name
+            for (let j = 0; j < keywordArr.length; j++){
+                if (itemName.toLowerCase().includes(keywordArr[j].toLowerCase())) {
+                    itemMatched.push(allItems[i])
+                    break;
+                }
+            } 
+        }
+        //console.log(itemMatched)
+        return await this.addOwnerInfoToItem(itemMatched);
+
+    },
+
+    async addOwnerInfoToItem(itemArr){
+        const arrLength = itemArr.length;
+        const output = []
+        for (let i = 0; i < arrLength; i ++){
+            let currentInfo = itemArr[i]
+            const owner = await users.getUserById(currentInfo.ownerId)
+            const itemWithOwner = {
+                _id: currentInfo._id,
+                ownerInfo: {
+                    ownerId: currentInfo.ownerId,
+                    ownerName: owner.userInfo.nickName,
+                    phone: owner.userInfo.phone,
+                    email: owner.email
+                    //add more user info here
+                },
+                itemInfo: currentInfo.information,
+                tag: currentInfo.tag
+            }
+            output.push(itemWithOwner)
+        }
+        return output;
     },
 
     async getAllItems(){
