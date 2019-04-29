@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -7,10 +8,13 @@
   <title>{{title}}</title>
   {{!-- <link rel="stylesheet" type="text/css" href="/public/css/codepen_demo.css"> --}}
   <link rel="shortcut icon" href="">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/public/css/main.css">
 </head>
+
 <body>
   <header>
     <nav class="navbar sticky-top navbar-expand-lg bg-dark">
@@ -19,11 +23,14 @@
 
         {{!-- MOBA SHOP LOGO --}}
         <div class="navbar-header">
-          <a class="navbar-brand mx-auto" href="/"><img src="/public/img/logo.png" alt="" style="width:145px;height:auto"></a>
+          <a class="navbar-brand mx-auto" href="/"><img src="/public/img/logo.png" alt=""
+              style="width:145px;height:auto"></a>
         </div>
 
         {{!-- Toggler when the screen is small --}}
-        <button class="navbar-toggler btn btn-outline-light" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler btn btn-outline-light" type="button" data-toggle="collapse"
+          data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
+          aria-label="Toggle navigation">
           <span class="navbar-toggler-icon fas fa-bars"></span>
         </button>
 
@@ -32,7 +39,8 @@
           {{!-- Search Bar --}}
           <form class="form-inline col-lg-8 justify-content-center" method="GET" action="/search">
             <div class="input-group col-12">
-              <input class="form-control border-white" type="search" placeholder="Search" aria-label="Search" name="searchKeyword">
+              <input class="form-control border-white" type="search" placeholder="Search" aria-label="Search"
+                name="searchKeyword">
               <div class="input-group-append">
                 <button class="btn btn-outline-light icon-class" type="submit"><i class="fa fa-search"></i></button>
               </div>
@@ -48,7 +56,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}"><i class="fas fa-user-alt"></i></a>
+              <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}"><i
+                  class="fas fa-user-alt"></i></a>
             </li>
             {{else}}
             <li class="nav-item">
@@ -57,7 +66,7 @@
             <li class="nav-item">
               <a class="nav-link text-light" href="/authen/signup">Sign Up</a>
             </li>
-          {{/if}}
+            {{/if}}
           </ul>
 
         </div>
@@ -66,23 +75,34 @@
 
     </nav>
   </header>
-  
+
   {{{body}}}
-  
+
   <footer class="text-light mt-5 py-3 bg-dark">
-    <hr class="text-light"/>
+    <hr class="text-light" />
     <div class="container">
       <ul class="list-group list-group-flush">
-        <li class="list-group-item bg-dark text-center">Siyuan He  |  Liu Yang  |  Jake Lorvin  |  Yinghui Cai</li>
-        <li class="list-group-item bg-dark text-center" id="footer-brand"><h2>MOBA Shop</h2></li>
+        <li class="list-group-item bg-dark text-center">Siyuan He | Liu Yang | Jake Lorvin | Yinghui Cai</li>
+        <li class="list-group-item bg-dark text-center" id="footer-brand">
+          <h2>MOBA Shop</h2>
+        </li>
       </ul>
     </div>
-    <hr class="text-light"/>
+    <hr class="text-light" />
   </footer>
 
-  <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
+    integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
