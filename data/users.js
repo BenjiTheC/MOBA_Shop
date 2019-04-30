@@ -38,7 +38,7 @@ const exportedMethod = {
         if (!email) throw "you must provise a email"
 
         if (!userInfo.age) userInfo.age =  null
-        if (!userInfo.hender) userInfo.gender = ""
+        if (!userInfo.gender) userInfo.gender = ""
 
         const userCollection = await users()
 
