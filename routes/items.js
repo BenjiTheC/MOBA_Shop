@@ -35,6 +35,7 @@ router.get("/:id", async (req, res) => {
     try{
         return res.status(200).json({ status: 200, msg: "hit the route successfully!", currentRoute: `GET /items/${req.params.id}` })
         const item = await itemData.getItemById(req.params.id)
+
         //to be implemented
         //...
         //res.render()
@@ -54,27 +55,42 @@ router.post("/", upload.single("itemImage"), async (req,res) => {
         res.status(400).json({ error: "You must provide the owner id to add a item" });
         return;
     }
-    if (!newItemInfo.amount) {
-        res.status(400).json({ error: "You must provide the amount to add a item" });
+    if (!newItemInfo.name) {
+        res.status(400).json({ error: "You must provide a name to add a item" });
         return;
     }
     if (!newItemInfo.description) {
         res.status(400).json({ error: "You must provide the description to add a item" });
         return;
     }
-
+    if (!newItemInfo.price) {
+        res.status(400).json({ error: "You must provide the price to add a item" });
+        return;
+    }
+    if (!newItemInfo.amount) {
+        res.status(400).json({ error: "You must provide the amount to add a item" });
+        return;
+    }
+    if (!newItemInfo.tag) {
+        res.status(400).json({ error: "You must provide a tag to add a item" });
+        return;
+    }
     newItemInfo.information = {
+        name: newItemInfo.name,
         description: newItemInfo.description,
-        image: req.file.path.replace(/\\/g, "/") //get path here
+        image: req.file.path.replace(/\\/g, "/"), //get path here
+        price: newItemInfo.price,
+        amount: newItemInfo.amount
     }
 
     try{
-        const newItem = await itemData.addItem(newItemInfo.ownerId, newItemInfo.amount, newItemInfo.information)
+        const newItem = await itemData.addItem(newItemInfo.ownerId, newItemInfo.information, newItemInfo.tag)
         //to be implemented
         //...
         //res.render()
         res.json(newItem);
     }catch (e) {
+        console.log(e)
         res.sendStatus(500);
         return;
     }
