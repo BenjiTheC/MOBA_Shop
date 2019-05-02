@@ -1,21 +1,22 @@
-const express = require('express');
+const express = require("express");
+const { isLoggedIn } = require("../middlewares");
 const router = express.Router();
 
 const MOCK_USER_BENJI = {
   userId: "userbenji_00001",
   userPic: "https://via.placeholder.com/512x512.png?text=User+Picture",
   userName: "Benji",
-  userAsset: 65536,
-}
+  userAsset: 65536
+};
 
 function itemGenerator(repeat_time) {
   const itemSeed = {
-      itemPic: "https://via.placeholder.com/300x300.png?text=Item+Picture",
-      //itemPic: "https://ddragon.leagueoflegends.com/cdn/9.8.1/img/item/3117.png",
-      itemName: undefined,
-      itemPrice: 100000,
-      itemId: undefined,
-    };
+    itemPic: "https://via.placeholder.com/300x300.png?text=Item+Picture",
+    //itemPic: "https://ddragon.leagueoflegends.com/cdn/9.8.1/img/item/3117.png",
+    itemName: undefined,
+    itemPrice: 100000,
+    itemId: undefined
+  };
 
   const itemList = [];
 
@@ -27,12 +28,17 @@ function itemGenerator(repeat_time) {
     itemList.push(tempItem);
   }
 
-  return itemList
+  return itemList;
 }
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const itemList = itemGenerator(11);
-  return res.render('template/home', { title: "MOBA Shop", itemList: itemList, isLoggedIn: false, userInfo: MOCK_USER_BENJI });
-})
+  return res.render("template/home", {
+    title: "MOBA Shop",
+    itemList: itemList,
+    isLoggedIn: isLoggedIn(req, res),
+    userInfo: MOCK_USER_BENJI
+  });
+});
 
 module.exports = router;

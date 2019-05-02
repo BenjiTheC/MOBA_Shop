@@ -7,17 +7,17 @@ const authenRoutes = require("./authen");
 const testRoutes = require("./frontend_test");
 
 const constructorMethod = app => {
-    app.use("/", mainRoutes);
-    app.use("/users", userRoutes);
-    app.use("/items", itemRoutes);
-    app.use("/search", searchRoutes);
-    app.use("/authen", authenRoutes);
+  app.use("/", mainRoutes);
+  app.use("/users", userRoutes);
+  app.use("/items", itemRoutes);
+  app.use("/search", searchRoutes);
+  app.use("/authen", authenRoutes);
 
-    app.use("/test", testRoutes);
+  app.use("/test", testRoutes); // for the frontend testing only
 
-    app.use("*", (req, res) => {
-        res.status(404).json({ error: "Page Not found" });
-    });
+  app.use("*", (req, res) => {
+    res.redirect("");
+  });
 };
 
 module.exports = constructorMethod;
