@@ -10,21 +10,21 @@
       </div>
 
       <div class="form-group">
-        <label for="userName">User Name</label>
-        <input type="text" class="form-control" name="userName" id="userName" aria-describedby="user-name-help"
+        <label for="username">User Name*</label>
+        <input type="text" class="form-control" name="username" id="username" aria-describedby="user-name-help"
           placeholder="Create your user name" required>
         <small id="user-name-help" class="form-text text-muted mt-1">The user name can only contain Alphabetic
           characters and numbers</small>
       </div>
 
       <div class="form-group">
-        <label for="password" class="mb-0">Password</label>
+        <label for="password" class="mb-0">Password*</label>
         <input type="password" name="password" id="password" class="form-control" placeholder="Enter Your Password"
           aria-describedby="password-help" required>
         <small id="password-help" class="form-text text-muted my-1">The password should contain at least 6-8
           charaters,
           at least 1 upper case, 1 lower case, 1 number.</small>
-        <label for="confirmPassword" class="mb-0">Confirm Password</label>
+        <label for="confirmPassword" class="mb-0">Confirm Password*</label>
         <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
           placeholder="Confirm Your Password" required>
       </div>
@@ -32,39 +32,9 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="nickName" class="mb-0">Nick Name</label>
-            <input type="text" class="form-control" name="nickName" id="nickName" aria-describedby="nick-name-help"
-              placeholder="Something wild ;-)">
-            <small id="nick-name-help" class="form-text text-muted">Use your imagination!</small>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="gender" class="mb-0">Gender</label>
-            <select class="form-control" name="gender" id="gender">
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="age" class="mb-0">Age</label>
-            <input type="text" class="form-control" name="age" id="age" placeholder="Age">
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
             <label for="phone" class="mb-0">Phone</label>
-            <input type="number" class="form-control" name="phone" id="phone" aria-describedby="phone-help"
-              placeholder="+1(123)456-7890" required>
+            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" name="phone" id="phone"
+              aria-describedby="phone-help" placeholder="123-456-7890" required>
             <small id="phone-help" class="form-text text-muted">Enter your phone number.</small>
           </div>
         </div>

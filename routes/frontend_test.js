@@ -29,14 +29,17 @@ function itemGenerator(repeat_time) {
   return itemList;
 }
 router.get("/", async (req, res) => {
-  const itemList = itemGenerator(11);
-
-  return res.render("template/home", {
-    title: "MOBA Shop",
-    itemList: itemList,
-    isLoggedIn: true,
-    userInfo: MOCK_USER_BENJI
+  return res.render("template/error", {
+    error: { status: 500, msg: "Sorry, something goes wrong on our end :(" }
   });
+  // const itemList = itemGenerator(11);
+
+  // return res.render("template/home", {
+  //   title: "MOBA Shop",
+  //   itemList: itemList,
+  //   isLoggedIn: true,
+  //   userInfo: MOCK_USER_BENJI
+  // });
 });
 
 module.exports = router;
