@@ -1,7 +1,5 @@
 const express = require("express");
-const { isLoggedIn } = require("../middlewares");
 const router = express.Router();
-
 const MOCK_USER_BENJI = {
   userId: "userbenji_00001",
   userPic: "https://via.placeholder.com/512x512.png?text=User+Picture",
@@ -30,15 +28,18 @@ function itemGenerator(repeat_time) {
 
   return itemList;
 }
-
 router.get("/", async (req, res) => {
-  const itemList = itemGenerator(11);
-  return res.render("template/home", {
-    title: "MOBA Shop",
-    itemList: itemList,
-    isLoggedIn: isLoggedIn(req, res),
-    userInfo: MOCK_USER_BENJI
+  return res.render("template/error", {
+    error: { status: 500, msg: "Sorry, something goes wrong on our end :(" }
   });
+  // const itemList = itemGenerator(11);
+
+  // return res.render("template/home", {
+  //   title: "MOBA Shop",
+  //   itemList: itemList,
+  //   isLoggedIn: true,
+  //   userInfo: MOCK_USER_BENJI
+  // });
 });
 
 module.exports = router;

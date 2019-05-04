@@ -10,7 +10,7 @@ body {
     font-family: wowFont,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
 }
 
-hr {
+hr.footer-hr{
     overflow: visible; /* For IE */
     padding: 0;
     border: none;
@@ -18,7 +18,7 @@ hr {
     color: #f8f9fa;
     text-align: center;
 }
-hr:after {
+hr.footer-hr:after {
     content: "§";
     display: inline-block;
     position: relative;
@@ -34,6 +34,28 @@ hr:after {
 
 /* override certain feature of Bootstrap */
 
-.list-group-flush .list-group-item {
+#footer-brand {
     border-top: 1px solid #f8f9fa
 }
+
+#log-in-form {
+    max-width: 400px;
+}
+
+/* #log-in-bg, #sign-up-bg {
+    height: 71vh;
+    position: absolute;
+    top: 50px;
+    left:0px;
+    z-index: -1;
+    filter: blur(4px);
+    background: center url(/public/img/patrick-delmastro-finalinn.jpg) no-repeat;
+    background-size: cover;
+} */
+
+#log-in-section {
+    height: calc(100vh - 277.72px);
+}
+
+/* #sign-up-section {
+} */
