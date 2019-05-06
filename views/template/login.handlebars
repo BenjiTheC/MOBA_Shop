@@ -1,7 +1,7 @@
 <div id="log-in-bg" class="col-12"></div>
 
-<section id="log-in-section" class="text-center text-dark p-5">
-  <form class="mx-auto p-5 mt-5 border border-light bg-light rounded rounded-lg" id="log-in-form" method="POST"
+<section id="log-in-section" class="text-center text-dark d-flex">
+  <form class="p-5 border border-light bg-light rounded rounded-lg mx-auto my-3 col-md-6" id="log-in-form" method="POST"
     action="/authen/login">
     <img class="mb-4 p-3 bg-dark rounded rounded-lg" src="/public/img/logo.png" style="width:250px;height:auto">
     <div class="form-group my-3">
@@ -13,13 +13,23 @@
         placeholder="Password" required>
     </div>
 
-    <div class="form-check mb-2">
+    {{!-- <div class="form-check mb-2">
       <label class="form-check-label">
         <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" value="rememberMe">
         Remember Me
       </label>
-    </div>
+    </div> --}}
 
     <button type="submit" class="btn btn-lg btn-block btn-dark">Log In</button>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6 d-flex align-items-center">
+        <small class="text-muted form-text">Don't have an account yet?</small>
+      </div>
+      <div class="col-md-6 d-flex align-items-center">
+        <a class="btn btn-dark btn-lg btn-block" href="/authen/signup" role="button">Sign Up</a>
+      </div>
+    </div>
   </form>
 </section>

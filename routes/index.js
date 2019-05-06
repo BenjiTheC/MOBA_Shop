@@ -4,11 +4,13 @@ const searchRoutes = require("./search");
 const itemRoutes = require("./items");
 const authenRoutes = require("./authen");
 
+const { isAuthenticated } = require("../middlewares");
+
 const testRoutes = require("./frontend_test");
 
 const constructorMethod = app => {
   app.use("/", mainRoutes);
-  app.use("/users", userRoutes);
+  app.use("/users", isAuthenticated, userRoutes);
   app.use("/items", itemRoutes);
   app.use("/search", searchRoutes);
   app.use("/authen", authenRoutes);

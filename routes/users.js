@@ -57,55 +57,6 @@ router.get("/:id/cart", async (req, res) => {
   res.render("template/usercart", {});
 });
 
-router.post("/", async (req, res) => {
-  const newUserInfo = req.body;
-
-  if (!newUserInfo.userName) {
-    res
-      .status(400)
-      .json({ error: "You must provide a user name to create a user" });
-    return;
-  }
-  if (!newUserInfo.userPassword) {
-    res
-      .status(400)
-      .json({ error: "You must provide a password to create a user" });
-    return;
-  }
-  if (!newUserInfo.userInfo.nickName) {
-    res
-      .status(400)
-      .json({ error: "You must provide a nick name to create a user" });
-    return;
-  }
-  if (!newUserInfo.userInfo.phone) {
-    res
-      .status(400)
-      .json({ error: "You must provide a phone number to create a user" });
-    return;
-  }
-  if (!newUserInfo.email) {
-    res.status(400).json({ error: "You must provide an email" });
-    return;
-  }
-
-  try {
-    const newUser = await userData.addUser(
-      newUserInfo.userName,
-      newUserInfo.userPassword,
-      newUserInfo.userInfo,
-      newUserInfo.email
-    );
-    //to be implemented
-    //...
-    //res.render()
-    res.json(newUser);
-  } catch (e) {
-    res.sendStatus(500);
-    return;
-  }
-});
-
 router.put("/:id", async (req, res) => {
   const inputInfo = req.body;
 

@@ -1,8 +1,17 @@
 <section id="sign-up-section" class="text-dark">
 
   <div class="container">
-    <form class="col-md-8 mx-auto p-5 mt-5 border border-light bg-light rounded rounded-lg" id="sign-up-form"
-      method="POST" action="/authen/signup">
+    {{#if passwordNotMatch}}
+    <div id="passwordNotMatch" class="col-md-8 mx-auto alert alert-danger text-center" role="alert">
+      <p class="m-0 p-0">Password and confirm password don't match!</p>
+    </div>
+    {{!-- <div class="col-md-8 mx-auto alert alert-danger text-center" role="alert">
+      <p class="m-0 p-0">other warning</p>
+    </div> --}}
+    {{/if}}
+
+    <form class="col-md-8 mx-auto p-5 border border-light bg-light rounded rounded-lg" id="sign-up-form" method="POST"
+      action="/authen/signup">
 
       <div class="col-12 text-center">
 

@@ -11,7 +11,16 @@ function myLogger(req, res, next) {
   next();
 }
 
+function isAuthenticated(req, res, next) {
+  if (!req.session.user) {
+    res.redirect("/authen/login");
+  } else {
+    next();
+  }
+}
+
 module.exports = {
   isLoggedIn,
-  myLogger
+  myLogger,
+  isAuthenticated
 };
