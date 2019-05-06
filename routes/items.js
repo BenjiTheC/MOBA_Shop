@@ -98,6 +98,14 @@ router.post("/", upload.single("itemImage"), async (req,res) => {
 
 router.get("/tag/:tag", async (req, res) => {
     console.log(`in GET /tag/${req.params.tag}`);
+
+    try {
+        const matchedItems = await itemData.getItemsByTag(req.params.tag);
+        console.log(matchedItems);
+    }catch (e) {
+        console.log(e);
+    }
+
     return res.status(200).json({ status: 200, msg: "Successfully hit the route!", currentRoute: `GET /tag/${req.params.tag}` })
 })
 

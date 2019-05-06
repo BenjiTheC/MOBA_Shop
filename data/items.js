@@ -6,6 +6,62 @@ const dot = require('mongo-dot-notation');
 
 const exportedMethod = {
 
+    async getItemsByTag(tag){
+
+        const itemCollection = await items();
+        const matchedItems = await itemCollection.find({isPurchase: false, tag: tag}).toArray();
+        for (let i = 0; i < matchedItems.length; i ++){
+            const itemInfo = {
+                itemPic: matchedItems[i].information.image,
+                itemName: matchedItems[i].information.name,
+                itemPrice: matchedItems[i].information.price,
+                itemId: matchedItems[i]._id
+            }
+            matchedItems[i] = itemInfo;
+        }
+        return matchedItems;
+
+    },
+
+    async getNewestItemForMain(num){
+
+        const allItems = await this.getAllItems();
+        if (allItems.length >= num){
+
+            startIndex = allItems.length - num;
+            for (let i = startIndex; i < allItems.length; i ++){
+                const itemInfo = {
+                    itemPic: allItems[i].information.image,
+                    itemName: allItems[i].information.name,
+                    itemPrice: allItems[i].information.price,
+                    itemId: allItems[i]._id
+                }
+                allItems[i] = itemInfo;
+            }
+            return allItems;
+            // return {length: num, items:allItems};
+        }else {
+            for (let i = 0; i < allItems.length; i ++){
+                const itemInfo = {
+                    itemPic: allItems[i].information.image,
+                    itemName: allItems[i].information.name,
+                    itemPrice: allItems[i].information.price,
+                    itemId: allItems[i]._id
+                }
+                allItems[i] = itemInfo;
+            }
+            return allItems;
+            // return {length: allItems.length, items:allItems};
+        }
+
+
+    },
+
+    // itemPic: "https://via.placeholder.com/300x300.png?text=Item+Picture",
+    // itemName: undefined,
+    // itemPrice: 100000,
+    // itemId: undefined
+
     async searchByKeyword(keywordStr){
         if (!keywordStr) throw "you must provide a keyword string to search for"
         let keywordArr = keywordStr.split(" ")
@@ -18,13 +74,19 @@ const exportedMethod = {
             let itemName = allItems[i].information.name
             for (let j = 0; j < keywordArr.length; j++){
                 if (itemName.toLowerCase().includes(keywordArr[j].toLowerCase())) {
-                    itemMatched.push(allItems[i])
+                    const itemInfo = {
+                        itemId: allItems[i]._id,
+                        itemName: allItems[i].information.name,
+                        itemPrice: allItems[i].information.price,
+                        itemPic: allItems[i].information.image
+                    }
+                    itemMatched.push(itemInfo);
                     break;
                 }
             } 
         }
         //console.log(itemMatched)
-        return await this.addOwnerInfoToItem(itemMatched);
+        return itemMatched;
 
     },
 
@@ -36,14 +98,18 @@ const exportedMethod = {
             const owner = await users.getUserById(currentInfo.ownerId)
             const itemWithOwner = {
                 _id: currentInfo._id,
-                ownerInfo: {
-                    ownerId: currentInfo.ownerId,
-                    ownerName: owner.userInfo.nickName,
-                    phone: owner.userInfo.phone,
-                    email: owner.email
-                    //add more user info here
-                },
-                itemInfo: currentInfo.information,
+
+                ownerId: currentInfo.ownerId,
+                ownerName: owner.userInfo.nickName,
+                phone: owner.userInfo.phone,
+                email: owner.email,
+                //add more user info here
+
+                itemName: currentInfo.information.name,
+                description: currentInfo.information.description,
+                image: currentInfo.information.image,
+                price: currentInfo.information.price,
+                amount: currentInfo.information.amount,
                 tag: currentInfo.tag
             }
             output.push(itemWithOwner)
@@ -55,7 +121,7 @@ const exportedMethod = {
 
         //need to implement return item information with author
         const itemCollection = await items();
-        const allItems = await itemCollection.find({}).toArray();
+        const allItems = await itemCollection.find({isPurchase: false}).toArray();
         return allItems;
     },
 
@@ -83,7 +149,10 @@ const exportedMethod = {
         let newItem = {
             ownerId: ownerId,
             information: information,
-            tag: tag
+            tag: tag,
+            isPurchase: false,
+            buyerId:""
+
         }
         const insertInfo = await itemCollection.insertOne(newItem)
         if (insertInfo.insertedCount === 0) throw "can not add item"
