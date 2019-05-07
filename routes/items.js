@@ -74,6 +74,7 @@ router.post("/", upload.single("itemImage"), async (req,res) => {
         res.json(newItem);
     }catch (e) {
         res.sendStatus(500);
+        console.log(e)
         return;
     }
 });

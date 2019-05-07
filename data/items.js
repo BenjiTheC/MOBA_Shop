@@ -39,6 +39,18 @@ const exportedMethod = {
         const newId = insertInfo.insertedId
         const item = await this.getItemById(newId)
         return item
+    },
+
+    async updateItemPurchaseStatus(itemId, status) {
+        if (typeof status != 'boolean') {
+            throw 'status should be Boolean'
+        }
+        
+        let data = {
+            isPurchased: status
+        }
+        const itemCollection = await items();
+        return await itemCollection.updateOne({ _id: ObjectId(itemId) }, dot.flatten(data))
     }
     
 }

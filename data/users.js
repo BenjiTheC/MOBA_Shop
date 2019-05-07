@@ -48,7 +48,8 @@ const exportedMethod = {
             userInfo: userInfo,
             email: email,
             virtualConcurrency: 0.0, // automatically assigned in the future
-            purchaseHistory: []
+            purchaseHistory: [],
+            cart: [],
         }
         const insertInfo = await userCollection.insertOne(newUser)
         if (insertInfo.insertedCount === 0) throw "can not add user"
@@ -89,6 +90,49 @@ const exportedMethod = {
         if (updatedInfo.modifiedCount === 0) throw "can not update user successfully"
         return await this.getUserById(ObjectId(id))
 
+    },
+
+    async updateUserCart(uid, cart) {
+        const userCollection = await users()
+        const updateData = {
+            cart
+        }
+        const updatedInfo = await userCollection.updateOne({_id: ObjectId(uid)}, dot.flatten(updateData))
+        return cart
+    },
+
+    async deleteUserCartItem(uid, itemId) {
+        const userCollection = await users()
+        const updatedInfo = await userCollection.updateOne({_id: ObjectId(uid)}, {
+            $pull: {
+                'cart': itemId
+            }
+        })
+        return itemId
+    },
+
+    async getUserCartItems(uid) {
+        const userCollection = await users()
+        let result = await userCollection.findOne({ _id: ObjectId(uid) }, { cart: 1 })
+        return result
+    },
+
+    async addPurhcaseHistory(uid, itemId) {
+        const userCollection = await users()
+        return await userCollection.updateOne({ _id: ObjectId(uid) }, {
+            $push: {
+                'purchaseHistory': itemId
+            }
+        })
+    },
+
+    async updateVirtualConcurrency(uid, amount) {
+        const userCollection = await users()
+        return userCollection.updateOne({ _id: ObjectId(uid) }, {
+            $set: {
+                'virtualConcurrency': amount
+            }
+        })
     }
 
 }
