@@ -1,0 +1,66 @@
+<section id="sign-up-section" class="text-dark">
+
+  <div class="container">
+    {{#if passwordNotMatch}}
+    <div id="passwordNotMatch" class="col-md-8 mx-auto alert alert-danger text-center" role="alert">
+      <p class="m-0 p-0">Password and confirm password don't match!</p>
+    </div>
+    {{!-- <div class="col-md-8 mx-auto alert alert-danger text-center" role="alert">
+      <p class="m-0 p-0">other warning</p>
+    </div> --}}
+    {{/if}}
+
+    <form class="col-md-8 mx-auto p-5 border border-light bg-light rounded rounded-lg" id="sign-up-form" method="POST"
+      action="/authen/signup">
+
+      <div class="col-12 text-center">
+
+        <img class="mb-4 p-3 bg-dark rounded rounded-lg" src="/public/img/logo.png" style="width:250px;height:auto">
+      </div>
+
+      <div class="form-group">
+        <label for="username">User Name*</label>
+        <input type="text" class="form-control" name="username" id="username" aria-describedby="user-name-help"
+          placeholder="Create your user name" required>
+        <small id="user-name-help" class="form-text text-muted mt-1">The user name can only contain Alphabetic
+          characters and numbers</small>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="mb-0">Password*</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Enter Your Password"
+          aria-describedby="password-help" required>
+        <small id="password-help" class="form-text text-muted my-1">The password should contain at least 6-8
+          charaters,
+          at least 1 upper case, 1 lower case, 1 number.</small>
+        <label for="confirmPassword" class="mb-0">Confirm Password*</label>
+        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control"
+          placeholder="Confirm Your Password" required>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone" class="mb-0">Phone</label>
+            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" name="phone" id="phone"
+              aria-describedby="phone-help" placeholder="123-456-7890" required>
+            <small id="phone-help" class="form-text text-muted">Enter your phone number.</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email" class="mb-0">Email</label>
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="phone-help"
+              placeholder="mobashop@mobashop.com" required>
+            <small id="phone-help" class="form-text text-muted">Enter your Email.</small>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-dark ml-auto d-flex">Sign In</button>
+
+    </form>
+  </div>
+
+</section>
