@@ -7,20 +7,6 @@ function addToCart(itemId) {
     },
     "json"
   );
-  // $.ajax({
-  //   type: "POST",
-  //   url: "/cart",
-  //   data: { itemId },
-  //   async: false,
-  //   dataType: "json",
-  //   success: res => {
-  //     console.log("successfully get somthing");
-  //     console.log(res.responseTex);
-  //   },
-  //   error: res => {
-  //     console.log(res);
-  //   }
-  // });
 }
 
 if ($("#passwordNotMatch").length > 0) {

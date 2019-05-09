@@ -22,6 +22,32 @@ const dbInitiation = async () => {
   console.log("Database connected.");
 };
 
+async function addItemsByUser(userId, tag, startIndex, endIndex) {
+  const itemsLst = fs.readdirSync(`./seed/item_images_${tag}`); // path to retrieve images
+  const description =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.";
+  const price = Math.floor(Math.random() * (5000 - 1000)) + 1000;
+
+  for (let i = startIndex; i < endIndex; i++) {
+    const name = itemsLst[i] // use string manipulation and regex to populate the name
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g, " ")
+      .replace("png", "")
+      .replace(/  +/g, " ");
+    const image = `public/items_img/${itemsLst[i]}`;
+    const information = { name, description, image, price };
+
+    await items.addItem(userId, information, tag);
+    fs.copyFile(
+      `./seed/item_images_${tag}/${itemsLst[i]}`,
+      `./${image}`,
+      err => {
+        if (err) throw err;
+        console.log(`./seed/item_images_${tag}/${itemsLst[i]} ==> ./${image}`);
+      }
+    );
+  }
+}
+
 async function main() {
   await dbInitiation();
   await DATABASE.dropDatabase();
@@ -48,50 +74,9 @@ async function main() {
   );
 
   //add items
-  const lolItems = fs.readdirSync('item_images_lol/');
-  const dotaItems = fs.readdirSync('item_images/');
-
-  for (let i = 0; i < 5; i ++){
-      await items.addItem(
-          CamilleSquare._id,
-          {
-              name: lolItems[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g," ").replace("png","").replace( /  +/g, ' ' ),
-              description:
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
-              image: "seed/item_images_lol/" + lolItems[i],
-              price: Math.floor(Math.random() * (5000 - 1000)) + 1000// Math.floor(Math.random() * (max - min)) + min;
-          },
-          "lol"
-      );
-  }
-
-    for (let i = 5; i < 10; i ++){
-        await items.addItem(
-            EkkoSquare._id,
-            {
-                name: lolItems[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g," ").replace("png","").replace( /  +/g, ' ' ),
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
-                image: "seed/item_images_lol/" + lolItems[i],
-                price: Math.floor(Math.random() * (5000 - 1000)) + 1000// Math.floor(Math.random() * (max - min)) + min;
-            },
-            "lol"
-        );
-    }
-
-    for (let i = 0; i < 5; i ++){
-        await items.addItem(
-            FioraSquare._id,
-            {
-                name: dotaItems[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g," ").replace("png","").replace( /  +/g, ' ' ),
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
-                image: "seed/item_images/" + dotaItems[i],
-                price: Math.floor(Math.random() * (5000 - 1000)) + 1000// Math.floor(Math.random() * (max - min)) + min;
-            },
-            "dota"
-        );
-    }
+  await addItemsByUser(CamilleSquare._id, "lol", 22, 37);
+  await addItemsByUser(EkkoSquare._id, "dota", 44, 60);
+  await addItemsByUser(FioraSquare._id, "lol", 100, 115);
 
   console.log("Done seeding database");
   console.log(`
@@ -103,6 +88,7 @@ async function main() {
   } catch (e) {
     console.log(e);
   }
+  process.exit(0);
 }
 
 main().catch(console.error);
