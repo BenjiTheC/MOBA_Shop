@@ -3,7 +3,7 @@ const mainRoutes = require("./main");
 const searchRoutes = require("./search");
 const itemRoutes = require("./items");
 const authenRoutes = require("./authen");
-
+const cartRoutes = require("./cart");
 const { isAuthenticated } = require("../middlewares");
 
 const testRoutes = require("./frontend_test");
@@ -14,6 +14,7 @@ const constructorMethod = app => {
   app.use("/items", itemRoutes);
   app.use("/search", searchRoutes);
   app.use("/authen", authenRoutes);
+  app.use("/cart", cartRoutes);
 
   app.use("/test", testRoutes); // for the frontend testing only
 
