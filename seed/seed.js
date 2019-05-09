@@ -22,7 +22,7 @@ const dbInitiation = async () => {
   console.log("Database connected.");
 };
 
-async function addItemsByUser(userId, tag, startIndex, endIndex) {
+async function addItemsByUser(userObj, tag, startIndex, endIndex, cnt) {
   const itemsLst = fs.readdirSync(`./seed/item_images_${tag}`); // path to retrieve images
   const description =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.";
@@ -36,13 +36,17 @@ async function addItemsByUser(userId, tag, startIndex, endIndex) {
     const image = `public/items_img/${itemsLst[i]}`;
     const information = { name, description, image, price };
 
-    await items.addItem(userId, information, tag);
+    await items.addItem(userObj._id, information, tag);
     fs.copyFile(
       `./seed/item_images_${tag}/${itemsLst[i]}`,
       `./${image}`,
       err => {
         if (err) throw err;
-        console.log(`./seed/item_images_${tag}/${itemsLst[i]} ==> ./${image}`);
+        console.log(
+          `${userObj.username} | ${cnt++} | ./seed/item_images_${tag}/${
+            itemsLst[i]
+          } ==> ./${image}`
+        );
       }
     );
   }
@@ -74,9 +78,10 @@ async function main() {
   );
 
   //add items
-  await addItemsByUser(CamilleSquare._id, "lol", 22, 37);
-  await addItemsByUser(EkkoSquare._id, "dota", 44, 60);
-  await addItemsByUser(FioraSquare._id, "lol", 100, 115);
+  let CNT = 0;
+  await addItemsByUser(CamilleSquare, "lol", 22, 37, CNT);
+  await addItemsByUser(EkkoSquare, "dota", 44, 60, CNT);
+  await addItemsByUser(FioraSquare, "lol", 100, 115, CNT);
 
   console.log("Done seeding database");
   console.log(`
