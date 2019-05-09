@@ -45,7 +45,7 @@ const exportedMethod = {
     if (!username) throw "you must provide a userName";
     if (!hashedPassword) throw "you must provide a password";
     if (!phone) throw "you must provide a phone number";
-    if (!email) throw "you must provise a email";
+    if (!email) throw "you must provide a email";
 
     const userCollection = await users();
 
@@ -79,10 +79,7 @@ const exportedMethod = {
 
     //add new info here
     if (
-      !updateUser.userInfo.nickName &&
-      !updateUser.userInfo.phone &&
-      !updateUser.userInfo.age &&
-      !updateUser.userInfo.gender &&
+      !updateUser.phone &&
       !updateUser.email
     ) {
       throw "you must provide a nick name or phone or age or gender or email to be updated";
@@ -92,16 +89,8 @@ const exportedMethod = {
     let updateData = {};
 
     //add new info here
-    if (
-      updateUser.userInfo.nickName ||
-      updateUser.userInfo.phone ||
-      updateUser.userInfo.age ||
-      updateUser.userInfo.gender
-    ) {
-      updateData.userInfo = updateUser.userInfo;
-    }
-
     if (updateUser.email) updateData.email = updateUser.email;
+    if (updateUser.phone) updateData.phone = updateUser.phone;
 
     //use dot.flatten to flatten the data in updateData for update a specific data in userInfo
     const updatedInfo = await userCollection.updateOne(

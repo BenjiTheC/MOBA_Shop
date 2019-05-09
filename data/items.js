@@ -100,8 +100,8 @@ const exportedMethod = {
                 _id: currentInfo._id,
 
                 ownerId: currentInfo.ownerId,
-                ownerName: owner.userInfo.nickName,
-                phone: owner.userInfo.phone,
+                ownerName: owner.username,
+                phone: owner.phone,
                 email: owner.email,
                 //add more user info here
 
@@ -142,8 +142,8 @@ const exportedMethod = {
         if (!information.name) throw "you must provide a name"
         if (!information.description) throw "you must provide a description"
         if (!information.image) throw "you must provide a url for image"
-        if (!information.price) throw "you must provide a url for image"
-        if (!information.amount) throw "you must provide a url for image"
+        if (!information.price) throw "you must provide a price"
+        if (!information.amount) throw "you must provide an amount"
         if (!tag) throw "you must provide a tag"
         const itemCollection = await items()
         let newItem = {
