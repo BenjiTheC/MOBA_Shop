@@ -109,7 +109,6 @@ const exportedMethod = {
                 description: currentInfo.information.description,
                 image: currentInfo.information.image,
                 price: currentInfo.information.price,
-                amount: currentInfo.information.amount,
                 tag: currentInfo.tag
             }
             output.push(itemWithOwner)
@@ -143,7 +142,6 @@ const exportedMethod = {
         if (!information.description) throw "you must provide a description"
         if (!information.image) throw "you must provide a url for image"
         if (!information.price) throw "you must provide a price"
-        if (!information.amount) throw "you must provide an amount"
         if (!tag) throw "you must provide a tag"
         const itemCollection = await items()
         let newItem = {

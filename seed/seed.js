@@ -4,8 +4,8 @@ const MongoClient = require("mongodb").MongoClient;
 const users = data.users;
 const items = data.items;
 const bcrypt = require("bcrypt");
-var salt = bcrypt.genSaltSync(10);
-// const fs = require("fs");
+var salt = bcrypt.genSaltSync(5);
+const fs = require("fs");
 
 // var hash = bcrypt.hashSync("B4c0/\/", salt);
 
@@ -47,51 +47,51 @@ async function main() {
     "FioraSquare@gmail.com"
   );
 
-  const JaxSquare = await users.addUser(
-    "JaxSquare",
-    bcrypt.hashSync("Test123", salt),
-    "2010000003",
-    "JaxSquare@gmail.com"
-  );
+  //add items
+  const lolItems = fs.readdirSync('item_images_lol/');
+  const dotaItems = fs.readdirSync('item_images/');
 
-  const LissandraSquare = await users.addUser(
-    "LissandraSquare",
-    bcrypt.hashSync("Test123", salt),
-    "2010000004",
-    "JaxSquare@gmail.com"
-  );
+  for (let i = 0; i < 5; i ++){
+      await items.addItem(
+          CamilleSquare._id,
+          {
+              name: lolItems[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g," ").replace("png","").replace( /  +/g, ' ' ),
+              description:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
+              image: "seed/item_images_lol/" + lolItems[i],
+              price: Math.floor(Math.random() * (5000 - 1000)) + 1000// Math.floor(Math.random() * (max - min)) + min;
+          },
+          "lol"
+      );
+  }
 
-  const Master_YiSquare = await users.addUser(
-    "Master_YiSquare",
-    bcrypt.hashSync("Test123", salt),
-    "2010000005",
-    "Master_YiSquare@gmail.com"
-  );
+    for (let i = 5; i < 10; i ++){
+        await items.addItem(
+            EkkoSquare._id,
+            {
+                name: lolItems[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g," ").replace("png","").replace( /  +/g, ' ' ),
+                description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
+                image: "seed/item_images_lol/" + lolItems[i],
+                price: Math.floor(Math.random() * (5000 - 1000)) + 1000// Math.floor(Math.random() * (max - min)) + min;
+            },
+            "lol"
+        );
+    }
 
-  const YasuoSquare = await users.addUser(
-    "YasuoSquare",
-    bcrypt.hashSync("Test123", salt),
-    "2010000006",
-    "YasuoSquare@gmail.com"
-  );
-
-  await items.addItem(
-    CamilleSquare._id,
-    {
-      name: "Abyssal_Mask",
-      description:
-        "The aura increases in size if their users increase in size.",
-      image: "seed/item_images_lol/Abyssal_Mask.png",
-      price: "3000",
-      amount: "1"
-    },
-    "lol"
-  );
-
-  // const lolItems = fs.readdirSync('item_images_lol/');
-  // for (let i = 0; i < lolItems.length; i ++){
-  //     console.log(lolItems[i])
-  // }
+    for (let i = 0; i < 5; i ++){
+        await items.addItem(
+            FioraSquare._id,
+            {
+                name: dotaItems[i].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g," ").replace("png","").replace( /  +/g, ' ' ),
+                description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
+                image: "seed/item_images/" + dotaItems[i],
+                price: Math.floor(Math.random() * (5000 - 1000)) + 1000// Math.floor(Math.random() * (max - min)) + min;
+            },
+            "dota"
+        );
+    }
 
   console.log("Done seeding database");
   console.log(`
