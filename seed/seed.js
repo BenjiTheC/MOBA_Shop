@@ -9,9 +9,22 @@ var salt = bcrypt.genSaltSync(10);
 
 // var hash = bcrypt.hashSync("B4c0/\/", salt);
 
+let CONNECTION = undefined;
+let DATABASE = undefined;
+
+const dbInitiation = async () => {
+  if (!CONNECTION) {
+    CONNECTION = await MongoClient.connect("mongodb://localhost:27017/", {
+      useNewUrlParser: true
+    });
+    DATABASE = await CONNECTION.db("MOBA_Shop_DB");
+  }
+  console.log("Database connected.");
+};
+
 async function main() {
-  const db = await dbConnection();
-  await db.dropDatabase();
+  await dbInitiation();
+  await DATABASE.dropDatabase();
 
   const CamilleSquare = await users.addUser(
     "CamilleSquare",
@@ -81,11 +94,15 @@ async function main() {
   // }
 
   console.log("Done seeding database");
+  console.log(`
+  Hi Prof. Hill!
+  Please press ctrl-c for this script to exit, as the MongoDB has changed the metod of closing the database. :p
+  `);
   try {
-    await db.close(); //meet a problem here!!!!!!
+    await CONNECTION.close(); //meet a problem here!!!!!!
   } catch (e) {
     console.log(e);
   }
 }
 
-main();
+main().catch(console.error);

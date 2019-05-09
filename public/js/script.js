@@ -1,15 +1,7 @@
 function addToCart() {
-  console.group();
-  console.log("Button clicked");
-  console.log("Add to Cart");
-  console.groupEnd();
-}
-
-function buyItNow() {
-  console.group();
-  console.log("Button clicked");
-  console.log("Add to Cart");
-  console.groupEnd();
+  localStorage.setItem("cart", []);
+  console.log(localStorage);
+  console.log(typeof localStorage.cart);
 }
 
 if ($("#passwordNotMatch").length > 0) {
