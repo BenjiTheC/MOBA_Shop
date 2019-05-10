@@ -1,6 +1,13 @@
 <div id="log-in-bg" class="col-12"></div>
 
 <section id="log-in-section" class="text-center text-dark d-flex">
+
+  {{#if credentialInvalid}}
+  <div id="credentialInvalid" class="col-md-8 mx-auto alert alert-danger text-center" role="alert">
+    <p class="m-0 p-0">Your username or password is invalid!</p>
+  </div>
+  {{/if}}
+
   <form class="p-5 border border-light bg-light rounded rounded-lg mx-auto my-3 col-md-6" id="log-in-form" method="POST"
     action="/authen/login">
     <img class="mb-4 p-3 bg-dark rounded rounded-lg" src="/public/img/logo.png" style="width:250px;height:auto">
@@ -12,13 +19,6 @@
       <input type="password" class="form-control my-1" name="userPassword" id="userPassword" aria-describedby=""
         placeholder="Password" required>
     </div>
-
-    {{!-- <div class="form-check mb-2">
-      <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" value="rememberMe">
-        Remember Me
-      </label>
-    </div> --}}
 
     <button type="submit" class="btn btn-lg btn-block btn-dark">Log In</button>
     <hr>

@@ -16,10 +16,18 @@ router.post("/login", async (req, res) => {
   console.log(req.body);
 
   const username = req.body.userAccount;
-  const found_user = await userData.getUserByUsername(username);
+
+  try {
+    const found_user = await userData.getUserByUsername(username);
+  } catch (e) {
+    if (e === "username is not existed") {
+      return res.render("template/login", { credentialInvalid: true });
+    }
+  }
   if (!found_user) {
-    console.log("User not found!");
-    return res.render("template/login", {});
+    return res.status(500).render("template/error", {
+      error: { status: 500, msg: "something goes wrong in our end..." }
+    });
   }
 
   const passwd = req.body.userPassword;
@@ -28,7 +36,11 @@ router.post("/login", async (req, res) => {
     found_user.hashedPassword
   );
   if (passwd_accepted) {
-    req.session.user = found_user;
+    req.session.user = {
+      userId: found_user._id,
+      userName: found_user.username,
+      userAsset: found_user.virtualConcurrency
+    };
     return res.redirect("/");
   } else {
     return res.render("template/login", {});
@@ -44,7 +56,6 @@ router.get("/signup", async (req, res) => {
 router.post("/signup", async (req, res) => {
   console.log("in POST /authen/signup");
 
-  const { username, password, confirmPassword, phone, email } = req.body;
   // Jake:
   // Please do the form validation with following rules:
   // 1. Username must only contain [A-Za-z0-9_]
@@ -56,6 +67,7 @@ router.post("/signup", async (req, res) => {
   //  If the rules is not satisfied, please render the signup template passing a attribute with value as true and I will make the signup page render with alert according to the attribute you enter.
   //  See example here when I render the signup with 'passwordNotMatch
   // All of these rules have been specified and followed! -Jake
+  const { username, password, confirmPassword, phone, email } = req.body;
 
   for (let i = 0; i < username.length; i++) {
     if (
@@ -145,11 +157,7 @@ router.get("/logout", async (req, res) => {
 
   req.session.destroy();
 
-  return res.status(200).json({
-    status: 200,
-    msg: "successfully hit the route!",
-    currentRoute: "POST /authen/logout"
-  });
+  return res.redirect("/");
 });
 
 module.exports = router;

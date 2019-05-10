@@ -29,9 +29,7 @@
   <div class="col-md-4 mx-0 pt-1">
     {{#if isLoggedIn}}
     <div class="card pt-3 px-3 col-10 mx-auto" id="user-info">
-      <a href="/users/{{userInfo.userId}}">
-        <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="{{userInfo.userPic}}">
-      </a>
+
       <div class="card-body p-2 mt-2">
         <a href="/users/{{userInfo.userId}}" style="color: inherit">
           <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
