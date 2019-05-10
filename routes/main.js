@@ -17,13 +17,6 @@ router.get("/", async (req, res) => {
   // get itemInfo from database!!!!!!
   const num = 30; //can be turn here
   const itemList = await itemData.getNewestItemForMain(num);
-  // console.log(itemList);
-
-  for (let item of itemList) {
-    console.log("\n\n");
-    console.log(item);
-    console.log("\n\n");
-  }
 
   return res.render("template/home", {
     title: "MOBA Shop",

@@ -17,22 +17,27 @@ router.post("/login", async (req, res) => {
 
   const username = req.body.userAccount;
   const found_user = await userData.getUserByUsername(username);
-  if (!found_user) {
+  if (!found_user){
     console.log("User not found!");
-    return res.render("template/login", {});
+    res.render("template/login", {});
+    return;
   }
 
   const passwd = req.body.userPassword;
-  const passwd_accepted = await bcrypt.compare(
-    passwd,
-    found_user.hashedPassword
-  );
-  if (passwd_accepted) {
+  const passwd_accepted = await bcrypt.compare(passwd, found_user.hashedPassword);
+  if (passwd_accepted){
     req.session.user = found_user;
-    return res.redirect("/");
-  } else {
-    return res.render("template/login", {});
+    res.redirect('/');
+  } else{
+    res.render('template/login', {});
   }
+
+  return res.status(200).json({
+    status: 200,
+    msg: "successfully hit the route!",
+    currentRoute: "POST /authen/login",
+    body: req.body
+  });
 });
 
 router.get("/signup", async (req, res) => {
@@ -54,20 +59,14 @@ router.post("/signup", async (req, res) => {
   //    - At least one lowercase character
   //    - At lease one number
   //  If the rules is not satisfied, please render the signup template passing a attribute with value as true and I will make the signup page render with alert according to the attribute you enter.
-  //  See example here when I render the signup with 'passwordNotMatch
+  //  See example here when I render the signup with 'passwordNotMatch 
   // All of these rules have been specified and followed! -Jake
 
-  for (let i = 0; i < username.length; i++) {
-    if (
-      !(
-        (username.charCodeAt(i) <= 90 && username.charCodeAt(i) >= 65) ||
-        (username.charCodeAt(i) >= 48 && username.charCodeAt(i) <= 57) ||
-        (username.charCodeAt(i) >= 97 && username.charCodeAt(i) <= 122)
-      )
-    ) {
+  for (let i = 0; i < username.length; i++){
+    if (!(((username.charCodeAt(i) <= 90) && (username.charCodeAt(i) >= 65)) || ((username.charCodeAt(i) >= 48) && (username.charCodeAt(i) <= 57)) || ((username.charCodeAt(i) >= 97) && username.charCodeAt(i) <= 122))){
       //this means every character is within our constraints
       return res.render("template/signup", { usernameNotValid: true }); //HANDLE THIS IN ALERTS
-    }
+    } 
   }
 
   let Uppercase = false;
@@ -75,28 +74,26 @@ router.post("/signup", async (req, res) => {
   let number_exists = false;
 
   //setting a minimum password length
-  if (password.length < 6) {
-    return res.render("template/signup", { passwordNotLongEnough: true }); //HANDLE THIS IN ALERTS
+  if (password.length < 6){
+    return res.render("template/signup", { passwordNotLongEnough: true}); //HANDLE THIS IN ALERTS
   }
 
   //loop through password to check each character
-  for (let j = 0; j < password.length; j++) {
+  for (let j = 0; j < password.length; j++){
     let temp = password.charAt(j);
     //is there at least one uppercase?
-    if (temp == temp.toUpperCase()) {
+    if (temp == temp.toUpperCase()){
       Uppercase = true;
-    } else if (temp == temp.toLowerCase()) {
-      //is there at least one lowercase?
+    } else if (temp == temp.toLowerCase()){ //is there at least one lowercase?
       Lowercase = true;
-    } else if (!isNaN(temp)) {
-      //is there at least one number?
+    } else if (!isNaN(temp)){ //is there at least one number?
       number_exists = true;
     }
   }
 
   //check all the constraints, if the user meets them, we fall through
-  if (!(Uppercase && Lowercase && number_exists)) {
-    return res.render("template/signup", { passwordNotStrong: true }); //HANDLE THIS IN ALERTS
+  if (!(Uppercase && Lowercase && number_exists)){
+    return res.render("template/signup", { passwordNotStrong: true}); //HANDLE THIS IN ALERTS
   }
 
   if (password !== confirmPassword) {
