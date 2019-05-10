@@ -6,6 +6,7 @@ const dot = require("mongo-dot-notation");
 
 const exportedMethod = {
   async getItemsByTag(tag) {
+    let itemList = []
     const itemCollection = await items();
     const matchedItems = await itemCollection
       .find({ isPurchase: false, tag: tag })
@@ -17,9 +18,9 @@ const exportedMethod = {
         itemPrice: matchedItems[i].information.price,
         itemId: matchedItems[i]._id
       };
-      matchedItems[i] = itemInfo;
+      itemList.push(itemInfo);
     }
-    return matchedItems;
+    return itemList;
   },
 
   async getNewestItemForMain(num) {
