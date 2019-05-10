@@ -1,8 +1,10 @@
 const userData = require("./users");
-const itemData = require("./items")
+const itemData = require("./items");
+const conData = require("./conversation")
 
 module.exports = {
     users: userData,
-    items: itemData
+    items: itemData,
+    conversation: conData
 
 };
