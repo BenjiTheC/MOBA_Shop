@@ -6,10 +6,8 @@ const itemData = data.items;
 
 router.post("/", async (req, res) => {
   let data = req.body;
-  let uid = req.params.uid;
-  console.log(req.params);
   console.log(req.body);
-  return res.status(200).json({ message: `BLBLBLBL` });
+
   if (!Array.isArray(data)) {
     res.status(400).send("Not an array");
     return;
