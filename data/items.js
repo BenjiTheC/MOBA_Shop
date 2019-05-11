@@ -1,6 +1,7 @@
 const mongoCollections = require("./collections");
 const items = mongoCollections.items;
 const users = require("./users");
+const conversation = require("./conversation");
 const { ObjectId } = require("mongodb");
 const dot = require("mongo-dot-notation");
 
@@ -143,11 +144,14 @@ const exportedMethod = {
     if (!ObjectId.isValid(id)) throw "invalid input id";
     const itemCollection = await items();
     const item = await itemCollection.findOne({ _id: ObjectId(id) });
+    const conArr = await conversation.getConByItemId(id);
     if (item === null) throw "no item with that id";
     const temp = [];
     temp.push(item);
     const process = await this.addOwnerInfoToItem(temp);
-    return process[0];
+    let itemDetail = process[0];
+    itemDetail.conversation = conArr;
+    return itemDetail;
   },
 
   async addItem(ownerId, information, tag) {

@@ -2,15 +2,39 @@ const mongoCollections = require("./collections");
 const conversation = mongoCollections.conversation;
 const { ObjectId } = require("mongodb");
 const dot = require("mongo-dot-notation");
+const users = require("./users");
 
 const exportedMethod = {
+
+
 
     async getConByItemId(itemId){
         if (!itemId) throw "you must provide an id to search for";
         if (!ObjectId.isValid(itemId)) throw "invalid input id";
         const conCollection = await conversation();
         const conversations = await conCollection.find({itemId: itemId}).toArray();
-        return conversations;
+        let conWithPosterId = [];
+        for (let i = 0; i < conversations.length; i ++) {
+            let replyWithPosterId = [];
+            const commentsArray = conversations[i].commentsArray;
+            for (let j = 0; j < commentsArray.length; j ++){
+                const userInfo = await users.getUserById(commentsArray[j].posterId)
+                let newReplyInfo = {
+                    posterId: commentsArray[j].posterId,
+                    posterName: userInfo.username,
+                    comment: commentsArray[j].comment
+                }
+                replyWithPosterId.push(newReplyInfo)
+            }
+            let newConInfo = {
+                _id: conversations[i]._id,
+                itemId: conversations[i].itemId,
+                commentsArray: replyWithPosterId
+            }
+            conWithPosterId.push(newConInfo)
+        }
+
+        return conWithPosterId;
     },
 
     async getConById(id) {
@@ -27,14 +51,14 @@ const exportedMethod = {
         if (!posterId || !typeof posterId === "string") throw "you must provide a poster id";
         if (!comment || !typeof comment === "string") throw "you must provide a comment";
         const replyCon = await this.getConById(conId);
-        let replyArr = replyCon.replyArray;
+        let commentsArray = replyCon.commentsArray;
         const replyComment = {
             posterId: posterId,
             comment: comment
         }
-        replyArr.push(replyComment);
+        commentsArray.push(replyComment);
         let updateData = {
-            replyArray: replyArr
+            commentsArray: commentsArray
         }
         const conCollection = await conversation();
         const updatedInfo = await conCollection.updateOne({_id: ObjectId(conId)},dot.flatten(updateData));
@@ -49,11 +73,17 @@ const exportedMethod = {
         if (!posterId || typeof posterId !== "string") throw "you must provide a poster id";
         if (!comment || typeof comment !== "string") throw "you must provide a comment";
 
-        let newCon = {
-            itemId: itemId,
+        const commentsArray = [];
+
+        let newComment = {
             posterId: posterId,
             comment: comment,
-            replyArray: []//store all the reply of this comment, which form the conversation.
+        }
+        commentsArray.push(newComment);
+
+        let newCon = {
+            itemId: itemId,
+            commentsArray: commentsArray//store all the reply of this comment, which form the conversation.
         }
         const conCollection = await conversation();
         const insertInfo = await conCollection.insertOne(newCon);
