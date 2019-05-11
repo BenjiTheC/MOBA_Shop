@@ -41,11 +41,12 @@ router.put("/", async (req, res) => {
     const comment = newReply.comment;
     try {
         const updatedCon = await conData.addReply(conId, comment, posterId);
+        res.json(updatedCon);
     }catch (e) {
         console.log(e)
     }
 
-    res.json(updatedCon);
+
 
 });
 

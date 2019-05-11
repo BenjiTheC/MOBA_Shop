@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     console.log(`in GET /items/${req.params.id}`);
     try{
-        return res.status(200).json({ status: 200, msg: "hit the route successfully!", currentRoute: `GET /items/${req.params.id}` })
+        //return res.status(200).json({ status: 200, msg: "hit the route successfully!", currentRoute: `GET /items/${req.params.id}` })
         const item = await itemData.getItemById(req.params.id)
 
         //to be implemented
