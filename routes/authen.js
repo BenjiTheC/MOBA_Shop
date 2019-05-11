@@ -17,8 +17,9 @@ router.post("/login", async (req, res) => {
 
   const username = req.body.userAccount;
 
+  let found_user;
   try {
-    const found_user = await userData.getUserByUsername(username);
+    found_user = await userData.getUserByUsername(username);
   } catch (e) {
     if (e === "username is not existed") {
       return res.render("template/login", { credentialInvalid: true });
@@ -43,7 +44,7 @@ router.post("/login", async (req, res) => {
     };
     return res.redirect("/");
   } else {
-    return res.render("template/login", {});
+    return res.render("template/login", { credentialInvalid: true });
   }
 });
 
@@ -56,17 +57,6 @@ router.get("/signup", async (req, res) => {
 router.post("/signup", async (req, res) => {
   console.log("in POST /authen/signup");
 
-  // Jake:
-  // Please do the form validation with following rules:
-  // 1. Username must only contain [A-Za-z0-9_]
-  // 2. Password must apply following rules:
-  //    - At least has length of 6
-  //    - At least one UPPERCASE character
-  //    - At least one lowercase character
-  //    - At lease one number
-  //  If the rules is not satisfied, please render the signup template passing a attribute with value as true and I will make the signup page render with alert according to the attribute you enter.
-  //  See example here when I render the signup with 'passwordNotMatch
-  // All of these rules have been specified and followed! -Jake
   const { username, password, confirmPassword, phone, email } = req.body;
 
   for (let i = 0; i < username.length; i++) {
@@ -97,10 +87,12 @@ router.post("/signup", async (req, res) => {
     //is there at least one uppercase?
     if (temp == temp.toUpperCase()) {
       Uppercase = true;
-    } else if (temp == temp.toLowerCase()) {
+    }
+    if (temp == temp.toLowerCase()) {
       //is there at least one lowercase?
       Lowercase = true;
-    } else if (!isNaN(temp)) {
+    }
+    if (!isNaN(temp)) {
       //is there at least one number?
       number_exists = true;
     }
@@ -125,9 +117,7 @@ router.post("/signup", async (req, res) => {
 
   if (userExisted) {
     // if the username register, return render the signup page with an alter
-    return res
-      .status(400)
-      .json({ error: { status: 400, msg: "username existed!!" } });
+    return res.render("template/signup", { usernameExist: true });
   }
 
   let newUser; // for the sake of scope
@@ -148,7 +138,7 @@ router.post("/signup", async (req, res) => {
     });
   }
 
-  return res.status(200).json({ status: 200, user: newUser });
+  return res.redirect("/authen/login");
 });
 
 router.get("/logout", async (req, res) => {

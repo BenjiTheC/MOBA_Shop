@@ -19,7 +19,7 @@ const constructorMethod = app => {
   app.use("/test", testRoutes); // for the frontend testing only
 
   app.use("*", (req, res) => {
-    res.redirect("");
+    res.redirect("/");
   });
 };
 

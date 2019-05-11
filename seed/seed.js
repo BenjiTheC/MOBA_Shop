@@ -22,30 +22,33 @@ const dbInitiation = async () => {
   console.log("Database connected.");
 };
 
-async function addItemsByUser(userObj, tag, startIndex, endIndex, cnt) {
+async function addItemsByUser(userObj, tag, startIndex, cnt) {
   const itemsLst = fs.readdirSync(`./seed/item_images_${tag}`); // path to retrieve images
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.";
-  const price = Math.floor(Math.random() * (5000 - 1000)) + 1000;
 
-  for (let i = startIndex; i < endIndex; i++) {
-    const name = itemsLst[i] // use string manipulation and regex to populate the name
+  for (let i = startIndex; i < startIndex + 15; i++) {
+    // create the information of the item
+    const information = {
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
+      price: Math.floor(Math.random() * (5000 - 1000)) + 1000
+    };
+    information.name = itemsLst[3 + 2 * (i + 1)] // use string manipulation and regex to populate the name
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g, " ")
       .replace("png", "")
       .replace(/  +/g, " ");
-    const image = `public/items_img/${itemsLst[i]}`;
-    const information = { name, description, image, price };
+    information.image = `public/items_img/${itemsLst[3 + 2 * (i + 1)]}`;
 
+    // add item to database, copy the item image file to the public/ folder
     await items.addItem(userObj._id, information, tag);
     fs.copyFile(
-      `./seed/item_images_${tag}/${itemsLst[i]}`,
-      `./${image}`,
+      `./seed/item_images_${tag}/${itemsLst[3 + 2 * (i + 1)]}`,
+      `./${information.image}`,
       err => {
         if (err) throw err;
         console.log(
           `${userObj.username} | ${cnt++} | ./seed/item_images_${tag}/${
-            itemsLst[i]
-          } ==> ./${image}`
+            itemsLst[3 + 2 * (i + 1)]
+          } ==> ./${information.image}`
         );
       }
     );
@@ -79,9 +82,9 @@ async function main() {
 
   //add items
   let CNT = 0;
-  await addItemsByUser(CamilleSquare, "lol", 22, 37, CNT);
-  await addItemsByUser(EkkoSquare, "dota", 44, 60, CNT);
-  await addItemsByUser(FioraSquare, "lol", 100, 115, CNT);
+  await addItemsByUser(CamilleSquare, "lol", 5, CNT);
+  await addItemsByUser(EkkoSquare, "dota", 17, CNT);
+  await addItemsByUser(FioraSquare, "lol", 8, CNT);
 
   console.log("Done seeding database");
   console.log(`

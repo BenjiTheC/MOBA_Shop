@@ -6,10 +6,28 @@ const dot = require("mongo-dot-notation");
 
 const exportedMethod = {
   async getItemsByTag(tag) {
-    let itemList = []
+    let itemList = [];
     const itemCollection = await items();
     const matchedItems = await itemCollection
       .find({ isPurchase: false, tag: tag })
+      .toArray();
+    for (let i = 0; i < matchedItems.length; i++) {
+      const itemInfo = {
+        itemPic: matchedItems[i].information.image,
+        itemName: matchedItems[i].information.name,
+        itemPrice: matchedItems[i].information.price,
+        itemId: matchedItems[i]._id
+      };
+      itemList.push(itemInfo);
+    }
+    return itemList;
+  },
+
+  async getItemsByOwner(ownerId) {
+    let itemList = [];
+    const itemCollection = await items();
+    const matchedItems = await itemCollection
+      .find({ isPurchase: false, ownerId: ObjectId(ownerId) })
       .toArray();
     for (let i = 0; i < matchedItems.length; i++) {
       const itemInfo = {

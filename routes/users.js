@@ -1,8 +1,9 @@
 const express = require("express");
+const { ObjectId } = require("mongodb");
 const router = express.Router();
 const data = require("../data");
 const userData = data.users;
-//const itemData = data.items;
+const itemData = data.items;
 
 // router.get("/", async (req, res) => {
 //   try {
@@ -21,33 +22,37 @@ const userData = data.users;
 router.get("/:id", async (req, res) => {
   try {
     console.log(`in GET /users/${req.params.id}`);
-    const MOCK_USER_BENJI = {
-      userId: "userbenji_00001",
-      userPic: "https://via.placeholder.com/512x512.png?text=User+Picture",
-      userName: "Benji",
-      userAsset: 65536
-    };
-    return res.render("template/userdashboard", {
-      title: `MOBA Shop | ${MOCK_USER_BENJI.userName}`,
-      userInfo: MOCK_USER_BENJI,
-      isLoggedIn: true
-    });
-    // return res
-    //   .status(200)
-    //   .json({
-    //     status: 200,
-    //     msg: "hit the route successfully!",
-    //     currentRoute: `GET /users/${req.params.id}`
-    //   });
+    const userId = req.params.id;
 
-    const user = await userData.getUserById(req.params.id);
-    //to be implemented
-    //...
-    //res.render()
-    res.json(user);
+    const user = await userData.getUserById(userId);
+    const renderUser = {
+      userId: user._id,
+      userName: user.username,
+      userAsset: user.virtualConcurrency
+    };
+
+    const purchaseHistory = [];
+    user.purchaseHistory.forEach(async itemId => {
+      purchaseHistory.push(await itemData.getItemById(itemId));
+    });
+
+    const currentSelling = await itemData.getItemsByOwner(userId);
+    // console.log(purchaseHistory);
+    // console.log(currentSelling);
+
+    return res.render("template/userdashboard", {
+      purchaseHistory: purchaseHistory,
+      currentSelling: currentSelling,
+      isLoggedIn: true, //quick dirty hack
+      userInfo: renderUser
+    });
   } catch (e) {
-    res.status(404).json({ message: "User not found" });
-    return;
+    return res.status(500).render("template/error", {
+      error: {
+        status: 500,
+        msg: "Seems like something goes wrong when retrieving the user..."
+      }
+    });
   }
 });
 

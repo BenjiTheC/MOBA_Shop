@@ -3,158 +3,73 @@
     <div class="row">
 
       <div class="col-sm-7">
+
         <div class="row">
           <h2 class="btn btn-outline-dark btn-lg btn-block mx-1">Things Your Are Selling</h2>
+          {{#if currentSelling}}
+          {{#each currentSelling}}
           <div class="col-lg-4 col-sm-6 col-12 p-1">
             <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
+              <a href="/items/{{this.itemId}}" style="color: inherit">
+                <img src="/{{this.itemPic}}" class="card-img-top" alt="item-pic">
               </a>
               <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
+                <a href="/items/{{this.itemId}}" style="color: inherit">
+                  <h6 class="card-title my-1">{{this.itemName}}</h6>
                 </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
+                <p class="card-text my-1">{{this.itemPrice}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-sm-6 col-12 p-1">
-            <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
-              </a>
-              <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
-                </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
-              </div>
-            </div>
+          {{/each}}
+          {{else}}
+          <div class="jumbotron col-12 text-center">
+            <p class="lead">Go ahead and sell some of your dopest shit!</p>
+            <hr class="my-2">
+            <p class="lead">
+              <a class="btn btn-dark btn-lg text-light btn-block" href="/items" role="button">Sell your stuff</a>
+            </p>
           </div>
-
-          <div class="col-lg-4 col-sm-6 col-12 p-1">
-            <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
-              </a>
-              <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
-                </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-12 p-1">
-            <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
-              </a>
-              <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
-                </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
-              </div>
-            </div>
-          </div>
+          {{/if}}
 
         </div>
+
+        {{!-- Separate the selling and purchase history --}}
         <hr>
         <div class="row">
           <h2 class="btn btn-outline-dark btn-lg btn-block mx-1">Purchase History</h2>
+          {{#if purchaseHistory}}
+          {{#each purchaseHistory}}
           <div class="col-lg-4 col-sm-6 col-12 p-1">
             <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
+              <a href="/items/{{this.itemId}}" style="color: inherit">
+                <img src="/{{this.itemPic}}" class="card-img-top" alt="item-pic">
               </a>
               <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
+                <a href="/items/{{this.itemId}}" style="color: inherit">
+                  <h6 class="card-title my-1">{{this.itemName}}</h6>
                 </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
+                <p class="card-text my-1">{{this.itemPrice}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-sm-6 col-12 p-1">
-            <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
-              </a>
-              <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
-                </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
-              </div>
-            </div>
+          {{/each}}
+          {{else}}
+          <div class="jumbotron col-12 text-center">
+            <p class="lead">Go check out our most recent dope goods!</p>
+            <hr class="my-2">
+            <p class="lead">
+              <a class="btn btn-dark btn-lg text-light btn-block" href="/" role="button">Check it out!</a>
+            </p>
           </div>
-
-          <div class="col-lg-4 col-sm-6 col-12 p-1">
-            <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
-              </a>
-              <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
-                </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-12 p-1">
-            <div class="card">
-              <a href="/items/item-id" style="color: inherit">
-                <img src="https://via.placeholder.com/300x300.png?text=Item+Picture" class="card-img-top"
-                  alt="item-pic">
-              </a>
-              <div class="card-body p-2">
-                <a href="/items/item-id" style="color: inherit">
-                  <h6 class="card-title my-1">Item Name</h6>
-                </a>
-                <p class="card-text my-1">Item Price</p>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Add to Cart</a>
-                <a href="#" class="btn btn-dark btn-sm border-light col">Buy it now</a>
-              </div>
-            </div>
-          </div>
+          {{/if}}
 
         </div>
 
       </div>
 
       <div class="col-sm-5">
-        {{#if isLoggedIn}}
         <div class="card pt-3 px-3 col-10 mx-auto" id="user-info">
-          <a href="/users/{{userInfo.userId}}">
-            <img class="card-img-top rounded rounded-circle " alt="unser-pic" src="{{userInfo.userPic}}">
-          </a>
           <div class="card-body p-2 mt-2">
             <a href="/users/{{userInfo.userId}}" style="color: inherit">
               <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
@@ -164,7 +79,18 @@
             </p>
           </div>
         </div>
-        {{/if}}
+
+        <div class="row col-10 mx-auto px-0">
+          <div class="card col-6 border-0 mt-2" id="tag-lol">
+            <img class="card-img-top bg-light" alt="tag-lol" src="/public/img/tag-lol.png">
+            <a href="/items/tag/lol" class="stretched-link"></a>
+          </div>
+
+          <div class="card col-6 border-0 mt-2" id="tag-dota2">
+            <img class="card-img-top bg-light" alt="tag-dota2" src="/public/img/tag-dota2.png">
+            <a href="/items/tag/dota2" class="stretched-link"></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

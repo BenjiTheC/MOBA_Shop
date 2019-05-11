@@ -69,6 +69,11 @@
             </li>
             {{else}}
             <li class="nav-item">
+              <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}/cart">
+                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light" id="items-in-cart">0</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link text-light" href="/authen/login">Log In</a>
             </li>
             <li class="nav-item">
