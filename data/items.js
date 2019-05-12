@@ -138,8 +138,26 @@ const exportedMethod = {
     const allItems = await itemCollection.find({ isPurchase: false }).toArray();
     return allItems;
   },
+    //this function only return the item info.
+    async getItemById(id){
+        if (!id) throw "you must provide an id to search for";
+        if (!ObjectId.isValid(id)) throw "invalid input id";
+        const itemCollection = await items();
+        const item = await itemCollection.findOne({ _id: ObjectId(id) });
+        if (item === null) throw "no item with that id";
+        const itemInfo = {
+            _id: item._id,
+            ownerId: item.ownerId,
+            itemName: item.information.name,
+            description: item.information.description,
+            image: item.information.image,
+            price: item.information.price,
+            tag: item.tag
+        }
+        return itemInfo;
+    },
 
-  async getItemById(id) {
+  async getItemWithOwnerAndCon(id) {
     if (!id) throw "you must provide an id to search for";
     if (!ObjectId.isValid(id)) throw "invalid input id";
     const itemCollection = await items();
