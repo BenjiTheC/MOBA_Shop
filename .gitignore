@@ -1,3 +1,7 @@
+
+# Customization ignorance by Benjamin at May 12th
+public/items_img/*
+
 # Logs
 logs
 *.log
