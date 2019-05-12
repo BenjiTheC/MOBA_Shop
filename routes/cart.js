@@ -5,26 +5,25 @@ const userData = data.users;
 const itemData = data.items;
 
 router.post("/", async (req, res) => {
+  console.log("in POST /cart");
   // this route will be hitted by ajax
   if (!req.session.cart) req.session.cart = []; // make a new cart if there is not cart/cart empty
 
   const cart = req.session.cart;
-  const itemId = req.body;
+  const ids = req.body;
 
-  console.log(itemId.itemId);
-  console.log(cart.includes(itemId.itemId));
-  if (!cart.includes(itemId.itemId)) cart.push(itemId.itemId);
+  if (!cart.includes(ids.itemId)) cart.push(ids.itemId);
 
   return res.json({ itemInCart: cart.length });
 });
 
 router.get("/", (req, res) => {
+  console.log("in GET /cart");
   res.send("test");
 });
 
-router.put("/", (req, res) => {});
-
 router.delete("/:itemId", async (req, res) => {
+  console.log("in DELETE /item");
   let itemId = req.params.itemId;
   let uid = req.params.uid;
 
@@ -37,6 +36,7 @@ router.delete("/:itemId", async (req, res) => {
 });
 
 router.post("/:itemId/purchase", async (req, res) => {
+  console.log("in POST /purchase");
   let itemId = req.params.itemId;
   let uid = req.params.uid;
   let item = await itemData.getItemById(itemId);

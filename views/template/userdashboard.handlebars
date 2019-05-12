@@ -79,6 +79,22 @@
             </p>
           </div>
         </div>
+        <a class="btn btn-dark mt-2 col-10 d-flex mx-auto justify-content-center" href="/cart">
+          Check Out&nbsp;&nbsp;
+          <span class="icon-class">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge badge-light" id="items-in-cart">
+              {{#if itemInCart}}
+              {{itemInCart}}
+              {{else}}
+              0
+              {{/if}}
+            </span>
+          </span>
+        </a>
+        <a class="btn btn-dark mt-2 col-10 d-flex mx-auto justify-content-center" href="/items">
+          Sell Your Finest Goods
+        </a>
 
         <div class="row col-10 mx-auto px-0">
           <div class="card col-6 border-0 mt-2" id="tag-lol">

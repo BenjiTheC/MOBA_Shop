@@ -17,7 +17,8 @@ const exportedMethod = {
         itemPic: matchedItems[i].information.image,
         itemName: matchedItems[i].information.name,
         itemPrice: matchedItems[i].information.price,
-        itemId: matchedItems[i]._id
+        itemId: matchedItems[i]._id,
+        ownerId: matchedItems[i].ownerId
       };
       itemList.push(itemInfo);
     }
@@ -35,7 +36,8 @@ const exportedMethod = {
         itemPic: matchedItems[i].information.image,
         itemName: matchedItems[i].information.name,
         itemPrice: matchedItems[i].information.price,
-        itemId: matchedItems[i]._id
+        itemId: matchedItems[i]._id,
+        ownerId: matchedItems[i].ownerId
       };
       itemList.push(itemInfo);
     }
@@ -46,32 +48,22 @@ const exportedMethod = {
     const allItems = await this.getAllItems();
     let itemLst = [];
 
-    if (allItems.length >= num) {
-      startIndex = allItems.length - num;
-      for (let i = startIndex; i < allItems.length; i++) {
-        const itemInfo = {
-          itemPic: allItems[i].information.image,
-          itemName: allItems[i].information.name,
-          itemPrice: allItems[i].information.price,
-          itemId: allItems[i]._id
-        };
-        itemLst.push(itemInfo);
-      }
-      return itemLst;
-      // return {length: num, items:allItems};
-    } else {
-      for (let i = 0; i < allItems.length; i++) {
-        const itemInfo = {
-          itemPic: allItems[i].information.image,
-          itemName: allItems[i].information.name,
-          itemPrice: allItems[i].information.price,
-          itemId: allItems[i]._id
-        };
-        itemLst.push(itemInfo);
-      }
-      return itemLst;
-      // return {length: allItems.length, items:allItems};
+    const startIndex = allItems.length
+      ? allItems.length - num
+      : allItems.length;
+
+    for (let i = startIndex; i < allItems.length; i++) {
+      let tempItem = allItems[i];
+      const itemInfo = {
+        itemPic: tempItem.information.image,
+        itemName: tempItem.information.name,
+        itemPrice: tempItem.information.price,
+        itemId: tempItem._id,
+        ownerId: tempItem.ownerId
+      };
+      itemLst.push(itemInfo);
     }
+    return itemLst;
   },
 
   // itemPic: "https://via.placeholder.com/300x300.png?text=Item+Picture",
@@ -88,14 +80,16 @@ const exportedMethod = {
     let itemMatched = [];
     const arrLength = allItems.length;
     for (let i = 0; i < arrLength; i++) {
-      let itemName = allItems[i].information.name;
+      let tempItem = allItems[i];
+      let itemName = tempItem.information.name;
       for (let j = 0; j < keywordArr.length; j++) {
         if (itemName.toLowerCase().includes(keywordArr[j].toLowerCase())) {
           const itemInfo = {
-            itemId: allItems[i]._id,
-            itemName: allItems[i].information.name,
-            itemPrice: allItems[i].information.price,
-            itemPic: allItems[i].information.image
+            itemPic: tempItem.information.image,
+            itemName: tempItem.information.name,
+            itemPrice: tempItem.information.price,
+            itemId: tempItem._id,
+            ownerId: tempItem.ownerId
           };
           itemMatched.push(itemInfo);
           break;
@@ -138,24 +132,27 @@ const exportedMethod = {
     const allItems = await itemCollection.find({ isPurchase: false }).toArray();
     return allItems;
   },
-    //this function only return the item info.
-    async getItemById(id){
-        if (!id) throw "you must provide an id to search for";
-        if (!ObjectId.isValid(id)) throw "invalid input id";
-        const itemCollection = await items();
-        const item = await itemCollection.findOne({ _id: ObjectId(id) });
-        if (item === null) throw "no item with that id";
-        const itemInfo = {
-            _id: item._id,
-            ownerId: item.ownerId,
-            itemName: item.information.name,
-            description: item.information.description,
-            image: item.information.image,
-            price: item.information.price,
-            tag: item.tag
-        }
-        return itemInfo;
-    },
+  //this function only return the item info.
+  async getItemById(id) {
+    if (!id) throw "you must provide an id to search for";
+    if (!ObjectId.isValid(id)) throw "invalid input id";
+
+    const itemCollection = await items();
+    const item = await itemCollection.findOne({ _id: ObjectId(id) });
+
+    if (item === null) throw "no item with that id";
+
+    const itemInfo = {
+      _id: item._id,
+      ownerId: item.ownerId,
+      itemName: item.information.name,
+      description: item.information.description,
+      image: item.information.image,
+      price: item.information.price,
+      tag: item.tag
+    };
+    return itemInfo;
+  },
 
   async getItemWithOwnerAndCon(id) {
     if (!id) throw "you must provide an id to search for";

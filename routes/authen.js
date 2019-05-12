@@ -8,7 +8,7 @@ const saltRounds = 5;
 router.get("/login", async (req, res) => {
   console.log("in GET /authen/login");
 
-  return res.render("template/login", { itemInCart: req.session.cart.length });
+  return res.render("template/login", {});
 });
 
 router.post("/login", async (req, res) => {
@@ -23,8 +23,7 @@ router.post("/login", async (req, res) => {
   } catch (e) {
     if (e === "username is not existed") {
       return res.render("template/login", {
-        credentialInvalid: true,
-        itemInCart: req.session.cart.length
+        credentialInvalid: true
       });
     }
   }
@@ -48,8 +47,7 @@ router.post("/login", async (req, res) => {
     return res.redirect("/");
   } else {
     return res.render("template/login", {
-      credentialInvalid: true,
-      itemInCart: req.session.cart.length
+      credentialInvalid: true
     });
   }
 });
@@ -57,7 +55,7 @@ router.post("/login", async (req, res) => {
 router.get("/signup", async (req, res) => {
   console.log("in GET /authen/signup");
 
-  return res.render("template/signup", { itemInCart: req.session.cart.length });
+  return res.render("template/signup", {});
 });
 
 router.post("/signup", async (req, res) => {
@@ -85,8 +83,7 @@ router.post("/signup", async (req, res) => {
   //setting a minimum password length
   if (password.length < 6) {
     return res.render("template/signup", {
-      passwordNotLongEnough: true,
-      itemInCart: req.session.cart.length
+      passwordNotLongEnough: true
     }); //HANDLE THIS IN ALERTS
   }
 
@@ -110,16 +107,14 @@ router.post("/signup", async (req, res) => {
   //check all the constraints, if the user meets them, we fall through
   if (!(Uppercase && Lowercase && number_exists)) {
     return res.render("template/signup", {
-      passwordNotStrong: true,
-      itemInCart: req.session.cart.length
+      passwordNotStrong: true
     }); //HANDLE THIS IN ALERTS
   }
 
   if (password !== confirmPassword) {
     // check if the 2 input passwords matched
     return res.render("template/signup", {
-      passwordNotMatch: true,
-      itemInCart: req.session.cart.length
+      passwordNotMatch: true
     });
   }
 
@@ -133,8 +128,7 @@ router.post("/signup", async (req, res) => {
   if (userExisted) {
     // if the username register, return render the signup page with an alter
     return res.render("template/signup", {
-      usernameExist: true,
-      itemInCart: req.session.cart.length
+      usernameExist: true
     });
   }
 

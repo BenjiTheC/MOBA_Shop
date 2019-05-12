@@ -1,7 +1,9 @@
-function addToCart(itemId) {
+function addToCart(combinedId) {
+  let itemId, ownerId;
+  [itemId, ownerId] = combinedId.split("|");
   $.post(
     "/cart",
-    { itemId },
+    { itemId, ownerId },
     data => {
       $("#items-in-cart").html(data.itemInCart);
     },

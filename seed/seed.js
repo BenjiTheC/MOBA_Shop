@@ -32,22 +32,22 @@ async function addItemsByUser(userObj, tag, startIndex, cnt) {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas dui id ornare arcu odio ut sem nulla pharetra.",
       price: Math.floor(Math.random() * (5000 - 1000)) + 1000
     };
-    information.name = itemsLst[3 + 2 * (i + 1)] // use string manipulation and regex to populate the name
+    information.name = itemsLst[i] // use string manipulation and regex to populate the name
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g, " ")
       .replace("png", "")
       .replace(/  +/g, " ");
-    information.image = `public/items_img/${itemsLst[3 + 2 * (i + 1)]}`;
+    information.image = `public/items_img/${itemsLst[i]}`;
 
     // add item to database, copy the item image file to the public/ folder
     await items.addItem(userObj._id, information, tag);
     fs.copyFile(
-      `./seed/item_images_${tag}/${itemsLst[3 + 2 * (i + 1)]}`,
+      `./seed/item_images_${tag}/${itemsLst[i]}`,
       `./${information.image}`,
       err => {
         if (err) throw err;
         console.log(
           `${userObj.username} | ${cnt++} | ./seed/item_images_${tag}/${
-            itemsLst[3 + 2 * (i + 1)]
+            itemsLst[i]
           } ==> ./${information.image}`
         );
       }
@@ -82,9 +82,9 @@ async function main() {
 
   //add items
   let CNT = 0;
-  await addItemsByUser(CamilleSquare, "lol", 5, CNT);
-  await addItemsByUser(EkkoSquare, "dota", 17, CNT);
-  await addItemsByUser(FioraSquare, "lol", 8, CNT);
+  await addItemsByUser(CamilleSquare, "lol", 33, CNT);
+  await addItemsByUser(EkkoSquare, "dota", 68, CNT);
+  await addItemsByUser(FioraSquare, "lol", 100, CNT);
 
   console.log("Done seeding database");
   console.log(`

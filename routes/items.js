@@ -4,111 +4,124 @@ const data = require("../data");
 const itemData = data.items;
 const multer = require("multer");
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./public/uploads");
-    },
-    filename: function (req, file, cb) {
-        cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname)
-    }
+  destination: function(req, file, cb) {
+    cb(null, "./public/uploads");
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+  }
 });
 
-const upload = multer({storage: storage})
+const upload = multer({ storage: storage });
 //can add limit for image here
 
-
 router.get("/", async (req, res) => {
-    try{
-        const itemList = await itemData.getAllItems();
-        //to be implemented
-        //...
-        //res.render()
+  console.log("in GET /items");
+  try {
+    const itemList = await itemData.getAllItems();
+    //to be implemented
+    //...
+    //res.render()
 
-        res.json(itemList)
-    }catch (e) {
-        res.sendStatus(500);
-        return;
-    }
+    res.json(itemList);
+  } catch (e) {
+    res.sendStatus(500);
+    return;
+  }
 });
 
 router.get("/:id", async (req, res) => {
-    console.log(`in GET /items/${req.params.id}`);
-    try{
-        //return res.status(200).json({ status: 200, msg: "hit the route successfully!", currentRoute: `GET /items/${req.params.id}` })
-        const item = await itemData.getItemWithOwnerAndCon(req.params.id)
-        //const item = await itemData.getItemById(req.params.id);
+  console.log(`in GET /items/${req.params.id}`);
+  try {
+    const item = await itemData.getItemWithOwnerAndCon(req.params.id);
 
-        //to be implemented
-        //...
-        //res.render()
-        res.json(item)
-    }catch (e) {
-        res.status(404).json({ message: "User not found" });
-        return;
-    }
+    res.render("template/itemDetail", {
+      item: item,
+      userInfo: req.session.user,
+      itemInCart: req.session.cart.length
+    });
+  } catch (e) {
+    res.status(500).json({
+      error: { status: 500, msg: "Something goes wrong in our end..." }
+    });
+    return;
+  }
 });
 
-router.post("/", upload.single("itemImage"), async (req,res) => {
-    //console.log(req.file)
-    //console.log(req.body)
-    const newItemInfo = req.body;
+router.post("/", upload.single("itemImage"), async (req, res) => {
+  console.log("in POST /item");
+  //console.log(req.file)
+  //console.log(req.body)
+  const newItemInfo = req.body;
 
-    if (!newItemInfo.ownerId) {
-        res.status(400).json({ error: "You must provide the owner id to add a item" });
-        return;
-    }
-    if (!newItemInfo.name) {
-        res.status(400).json({ error: "You must provide a name to add a item" });
-        return;
-    }
-    if (!newItemInfo.description) {
-        res.status(400).json({ error: "You must provide the description to add a item" });
-        return;
-    }
-    if (!newItemInfo.price) {
-        res.status(400).json({ error: "You must provide the price to add a item" });
-        return;
-    }
-    if (!newItemInfo.amount) {
-        res.status(400).json({ error: "You must provide the amount to add a item" });
-        return;
-    }
-    if (!newItemInfo.tag) {
-        res.status(400).json({ error: "You must provide a tag to add a item" });
-        return;
-    }
-    newItemInfo.information = {
-        name: newItemInfo.name,
-        description: newItemInfo.description,
-        image: req.file.path.replace(/\\/g, "/"), //get path here
-        price: newItemInfo.price,
-        amount: newItemInfo.amount
-    }
+  if (!newItemInfo.ownerId) {
+    res
+      .status(400)
+      .json({ error: "You must provide the owner id to add a item" });
+    return;
+  }
+  if (!newItemInfo.name) {
+    res.status(400).json({ error: "You must provide a name to add a item" });
+    return;
+  }
+  if (!newItemInfo.description) {
+    res
+      .status(400)
+      .json({ error: "You must provide the description to add a item" });
+    return;
+  }
+  if (!newItemInfo.price) {
+    res.status(400).json({ error: "You must provide the price to add a item" });
+    return;
+  }
+  if (!newItemInfo.amount) {
+    res
+      .status(400)
+      .json({ error: "You must provide the amount to add a item" });
+    return;
+  }
+  if (!newItemInfo.tag) {
+    res.status(400).json({ error: "You must provide a tag to add a item" });
+    return;
+  }
+  newItemInfo.information = {
+    name: newItemInfo.name,
+    description: newItemInfo.description,
+    image: req.file.path.replace(/\\/g, "/"), //get path here
+    price: newItemInfo.price,
+    amount: newItemInfo.amount
+  };
 
-    try{
-        const newItem = await itemData.addItem(newItemInfo.ownerId, newItemInfo.information, newItemInfo.tag)
-        //to be implemented
-        //...
-        //res.render()
-        res.json(newItem);
-    }catch (e) {
-        console.log(e)
-        res.sendStatus(500);
-        console.log(e)
-        return;
-    }
+  try {
+    const newItem = await itemData.addItem(
+      newItemInfo.ownerId,
+      newItemInfo.information,
+      newItemInfo.tag
+    );
+    //to be implemented
+    //...
+    //res.render()
+    res.json(newItem);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+    console.log(e);
+    return;
+  }
 });
 
 router.get("/tag/:tag", async (req, res) => {
-    console.log(`in GET /tag/${req.params.tag}`);
+  console.log(`in GET /tag/${req.params.tag}`);
 
-    try {
-        const matchedItems = await itemData.getItemsByTag(req.params.tag);
-        console.log(matchedItems);
-    }catch (e) {
-        console.log(e);
-    }
+  let matchedItems;
+  try {
+    matchedItems = await itemData.getItemsByTag(req.params.tag);
+    console.log(`got ${matchedItems.length} items`);
+  } catch (e) {
+    console.log(e);
+  }
 
-    return res.status(200).json({ status: 200, msg: "Successfully hit the route!", currentRoute: `GET /tag/${req.params.tag}` })
-})
+  return res.status(200).json(matchedItems);
+});
 
 module.exports = router;
