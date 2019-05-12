@@ -7,19 +7,23 @@ const itemData = data.items;
 router.get("/", async (req, res) => {
   console.log("in GET /search");
   if (!req.query.searchKeyword)
-    return res.status(400).json({ status: 400, err: "no serachKeyword!" });
+    return res
+      .status(400)
+      .render("error", { error: { status: 400, msg: "no serachKeyword!" } });
 
   try {
     let isMatched = false;
     const matchedItem = await itemData.searchByKeyword(req.query.searchKeyword);
     if (matchedItem.length > 0) isMatched = true;
-    //res.render()
-    res.status(200).json({ isMatched: isMatched, data: matchedItem });
+    return res.render("search", {
+      isMatched: isMatched,
+      searchResult: matchedItem,
+      userInfo: req.session.user,
+      itemInCart: req.session.cart.length
+    });
   } catch (e) {
     console.log(e);
   }
-
-  //res.status(200).json({ keyword: req.query.searchKeyword });
 });
 
 module.exports = router;

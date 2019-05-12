@@ -1,0 +1,70 @@
+<section class="container row my-md-2 mx-auto" id="user-dash-board">
+  <div class="col-md-8">
+
+    <div class="row">
+      <h2 class="btn btn-outline-dark btn-lg btn-block mx-1">Things Your Are Selling</h2>
+      {{#if currentSelling}}
+      {{#each currentSelling}}
+      <div class="col-lg-4 col-sm-6 col-12 p-1">
+        <div class="card">
+          <a href="/items/{{this.itemId}}" style="color: inherit">
+            <img src="/{{this.itemPic}}" class="card-img-top" alt="item-pic">
+          </a>
+          <div class="card-body p-2">
+            <a href="/items/{{this.itemId}}" style="color: inherit">
+              <h6 class="card-title my-1">{{this.itemName}}</h6>
+            </a>
+            <p class="card-text my-1">{{this.itemPrice}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="jumbotron col-12 text-center">
+        <p class="lead">Go ahead and sell some of your dopest shit!</p>
+        <hr class="my-2">
+        <p class="lead">
+          <a class="btn btn-dark btn-lg text-light btn-block" href="/items" role="button">Sell your stuff</a>
+        </p>
+      </div>
+      {{/if}}
+
+    </div>
+
+    {{!-- Separate the selling and purchase history --}}
+    <hr>
+    <div class="row">
+      <h2 class="btn btn-outline-dark btn-lg btn-block mx-1">Purchase History</h2>
+      {{#if purchaseHistory}}
+      {{#each purchaseHistory}}
+      <div class="col-lg-4 col-sm-6 col-12 p-1">
+        <div class="card">
+          <a href="/items/{{this.itemId}}" style="color: inherit">
+            <img src="/{{this.itemPic}}" class="card-img-top" alt="item-pic">
+          </a>
+          <div class="card-body p-2">
+            <a href="/items/{{this.itemId}}" style="color: inherit">
+              <h6 class="card-title my-1">{{this.itemName}}</h6>
+            </a>
+            <p class="card-text my-1">{{this.itemPrice}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="jumbotron col-12 text-center">
+        <p class="lead">Go check out our most recent dope goods!</p>
+        <hr class="my-2">
+        <p class="lead">
+          <a class="btn btn-dark btn-lg text-light btn-block" href="/" role="button">Check it out!</a>
+        </p>
+      </div>
+      {{/if}}
+
+    </div>
+
+  </div>
+
+  {{> sideBar}}
+
+</section>

@@ -1,0 +1,41 @@
+<div class="col-md-4 mx-0 pt-1">
+  {{#if userInfo}}
+  <div class="card pt-3 px-3 col-10 mx-auto" id="user-info">
+
+    <div class="card-body p-2 mt-2">
+      <a href="/users/{{userInfo.userId}}" style="color: inherit">
+        <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
+      </a>
+      <p class="card-text mb-2">Asset: {{userInfo.userAsset}} <span class="badge badge-pill badge-dark">MBCoin</span>
+      </p>
+    </div>
+  </div>
+  <a class="btn btn-dark text-light col-10 d-flex mx-auto mt-2 justify-content-center" href="/items">Sell your goods</a>
+  {{/if}}
+
+  <a class="btn btn-dark text-light col-10 d-flex mx-auto mt-2 justify-content-center" href="/cart">
+    Check Out&nbsp;&nbsp;
+    <span class="icon-class">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="badge badge-light" id="items-in-cart">
+        {{#if itemInCart}}
+        {{itemInCart}}
+        {{else}}
+        0
+        {{/if}}
+      </span>
+    </span>
+  </a>
+  <div class="row">
+    <div class="card col-6 border-0 mt-2" id="tag-lol">
+      <img class="card-img-top bg-light" alt="tag-lol" src="/public/img/tag-lol.png">
+      <a href="/items/tag/lol" class="stretched-link"></a>
+    </div>
+
+    <div class="card col-6 border-0 mt-2" id="tag-dota2">
+      <img class="card-img-top bg-light" alt="tag-dota2" src="/public/img/tag-dota2.png">
+      <a href="/items/tag/dota2" class="stretched-link"></a>
+    </div>
+  </div>
+
+</div>

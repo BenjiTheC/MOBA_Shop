@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
     const userId = req.params.id;
 
     const user = await userData.getUserById(userId);
-    const renderUser = {
+    const userInfo = {
       userId: user._id,
       userName: user.username,
       userAsset: user.virtualConcurrency
@@ -40,15 +40,14 @@ router.get("/:id", async (req, res) => {
     // console.log(purchaseHistory);
     // console.log(currentSelling);
 
-    return res.render("template/userdashboard", {
+    return res.render("userDashboard", {
       purchaseHistory: purchaseHistory,
       currentSelling: currentSelling,
-      isLoggedIn: true, //quick dirty hack
-      userInfo: renderUser,
+      userInfo: userInfo,
       itemInCart: req.session.cart.length
     });
   } catch (e) {
-    return res.status(500).render("template/error", {
+    return res.status(500).render("error", {
       error: {
         status: 500,
         msg: "Seems like something goes wrong when retrieving the user..."
@@ -60,7 +59,7 @@ router.get("/:id", async (req, res) => {
 router.get("/:id/cart", async (req, res) => {
   console.log(`in GET /${req.params.id}/cart`);
 
-  res.render("template/usercart", {});
+  res.render("userCart", {});
 });
 
 router.put("/:id", async (req, res) => {

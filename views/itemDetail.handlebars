@@ -1,0 +1,35 @@
+<section class="container row my-md-2 mx-auto" id="item-detail">
+
+  <div class="col-md-8 mx-0">
+    <div class="jumbotron">
+      <div class="row">
+
+        <div class="col-md-5">
+          <div class="card">
+            <img src="/{{item.image}}" class="card-img-top" alt="item-pic">
+            <div class="card-body p-2 d-flex justify-content-between">
+              <p class="card-text my-1 d-inline">{{item.price}} <span class="badge badge-pill badge-dark">MBCoin</span>
+              </p>
+              <p class="card-text my-1 d-inline"><span class="badge badge-dark">{{item.tag}}</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-7 px-0">
+          <h1>{{item.itemName}}</h1>
+          <p class="lead">{{item.description}}</p>
+          <hr class="item-detail">
+          <p id="{{item.ownerId}}">Owner: {{item.ownerName}}</p>
+          <button class="btn btn-dark btn-lg btn-block border-light" id="{{item.itemId}}|{{item._id}}"
+            onclick="addToCart(this.id)">Add
+            to
+            Cart</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  {{> sideBar}}
+</section>

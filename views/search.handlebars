@@ -1,0 +1,46 @@
+<section class="container row my-md-2 mx-auto" id="search-result">
+
+  <div class="col-md-8 col-12 mx-0" id="items-grid">
+
+    <div class="row">
+      {{#if isMatched}}
+      {{#each searchResult}}
+      <div class="col-lg-4 col-sm-6 col-12 p-1">
+        <div class="card">
+          <a href="/items/{{this.itemId}}" style="color: inherit">
+            <img src="{{this.itemPic}}" class="card-img-top" alt="item-pic">
+          </a>
+          <div class="card-body p-2">
+            <a href="/items/{{this.itemId}}" style="color: inherit">
+              <h6 class="card-title my-1">{{this.itemName}}</h6>
+            </a>
+            <p class="card-text my-1">{{this.itemPrice}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
+            <button class="btn btn-dark btn-sm border-light col" id="{{this.itemId}}|{{this.ownerId}}"
+              onclick="addToCart(this.id)">Add
+              to
+              Cart</button>
+
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="jumbotron col">
+        <div class="container">
+          <h1 class="display-3 p-3 rounded rounded-lg bg-dark text-center text-light">No Matching Result</h1>
+          <p class="lead">Sorry...</p>
+          <hr class="my-2">
+          <p class="lead">Seems like there is nothing matched...</p>
+          <p class="lead">
+            <a class="btn btn-dark text-light btn-lg" href="/" role="button">Check out some other dope stuff</a>
+          </p>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+
+  </div>
+
+  {{> sideBar}}
+
+</section>

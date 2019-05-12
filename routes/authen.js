@@ -8,7 +8,7 @@ const saltRounds = 5;
 router.get("/login", async (req, res) => {
   console.log("in GET /authen/login");
 
-  return res.render("template/login", {});
+  return res.render("login", {});
 });
 
 router.post("/login", async (req, res) => {
@@ -22,13 +22,13 @@ router.post("/login", async (req, res) => {
     found_user = await userData.getUserByUsername(username);
   } catch (e) {
     if (e === "username is not existed") {
-      return res.render("template/login", {
+      return res.render("login", {
         credentialInvalid: true
       });
     }
   }
   if (!found_user) {
-    return res.status(500).render("template/error", {
+    return res.status(500).render("error", {
       error: { status: 500, msg: "something goes wrong in our end..." }
     });
   }
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     };
     return res.redirect("/");
   } else {
-    return res.render("template/login", {
+    return res.render("login", {
       credentialInvalid: true
     });
   }
@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
 router.get("/signup", async (req, res) => {
   console.log("in GET /authen/signup");
 
-  return res.render("template/signup", {});
+  return res.render("signup", {});
 });
 
 router.post("/signup", async (req, res) => {
@@ -72,7 +72,7 @@ router.post("/signup", async (req, res) => {
       )
     ) {
       //this means every character is within our constraints
-      return res.render("template/signup", { usernameNotValid: true }); //HANDLE THIS IN ALERTS
+      return res.render("signup", { usernameNotValid: true }); //HANDLE THIS IN ALERTS
     }
   }
 
@@ -82,7 +82,7 @@ router.post("/signup", async (req, res) => {
 
   //setting a minimum password length
   if (password.length < 6) {
-    return res.render("template/signup", {
+    return res.render("signup", {
       passwordNotLongEnough: true
     }); //HANDLE THIS IN ALERTS
   }
@@ -106,14 +106,14 @@ router.post("/signup", async (req, res) => {
 
   //check all the constraints, if the user meets them, we fall through
   if (!(Uppercase && Lowercase && number_exists)) {
-    return res.render("template/signup", {
+    return res.render("signup", {
       passwordNotStrong: true
     }); //HANDLE THIS IN ALERTS
   }
 
   if (password !== confirmPassword) {
     // check if the 2 input passwords matched
-    return res.render("template/signup", {
+    return res.render("signup", {
       passwordNotMatch: true
     });
   }
@@ -127,7 +127,7 @@ router.post("/signup", async (req, res) => {
 
   if (userExisted) {
     // if the username register, return render the signup page with an alter
-    return res.render("template/signup", {
+    return res.render("signup", {
       usernameExist: true
     });
   }
@@ -139,13 +139,13 @@ router.post("/signup", async (req, res) => {
     newUser = await userData.addUser(username, hashedPassword, phone, email);
   } catch (e) {
     console.log(e);
-    return res.status(500).render("tempalte/error", {
+    return res.status(500).render("error", {
       error: { status: 500, msg: "Sorry, something goes wrong on our end :(" }
     });
   }
 
   if (!newUser) {
-    return res.status(500).render("tempalte/error", {
+    return res.status(500).render("error", {
       error: { status: 500, msg: "Sorry, something goes wrong on our end :(" }
     });
   }
