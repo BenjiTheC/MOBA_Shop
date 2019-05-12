@@ -2,8 +2,8 @@ function addToCart(itemId) {
   $.post(
     "/cart",
     { itemId },
-    function(data, textStatus, jqXHR) {
-      console.log(data);
+    data => {
+      $("#items-in-cart").html(data.itemInCart);
     },
     "json"
   );

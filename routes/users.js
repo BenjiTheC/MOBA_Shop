@@ -44,7 +44,8 @@ router.get("/:id", async (req, res) => {
       purchaseHistory: purchaseHistory,
       currentSelling: currentSelling,
       isLoggedIn: true, //quick dirty hack
-      userInfo: renderUser
+      userInfo: renderUser,
+      itemInCart: req.session.cart.length
     });
   } catch (e) {
     return res.status(500).render("template/error", {

@@ -11,7 +11,7 @@ const testRoutes = require("./frontend_test");
 
 const constructorMethod = app => {
   app.use("/", mainRoutes);
-  app.use("/users", isAuthenticated, userRoutes);
+  app.use("/users", isAuthenticated, userRoutes); // every request trying to hit this route need to be logged in
   app.use("/items", itemRoutes);
   app.use("/search", searchRoutes);
   app.use("/authen", authenRoutes);

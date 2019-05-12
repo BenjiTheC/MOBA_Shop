@@ -51,10 +51,11 @@
 
           {{!-- Nav Bar Tags --}}
           <ul class="nav navbar-nav ml-auto">
-            {{#if isLoggedIn}}
+            {{#if userInfo}}
             <li class="nav-item">
               <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}/cart">
-                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light" id="items-in-cart">0</span>
+                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light"
+                  id="items-in-cart">{{itemInCart}}</span>
               </a>
             </li>
             <li class="nav-item">
@@ -69,8 +70,9 @@
             </li>
             {{else}}
             <li class="nav-item">
-              <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}/cart">
-                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light" id="items-in-cart">0</span>
+              <a class="nav-link text-light icon-class" href="/cart">
+                <i class="fas fa-shopping-cart"></i> <span class="badge badge-light"
+                  id="items-in-cart">{{itemInCart}}</span>
               </a>
             </li>
             <li class="nav-item">

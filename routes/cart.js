@@ -5,21 +5,17 @@ const userData = data.users;
 const itemData = data.items;
 
 router.post("/", async (req, res) => {
-  let data = req.body;
-  console.log(req.body);
+  // this route will be hitted by ajax
+  if (!req.session.cart) req.session.cart = []; // make a new cart if there is not cart/cart empty
 
-  if (!Array.isArray(data)) {
-    res.status(400).send("Not an array");
-    return;
-  }
+  const cart = req.session.cart;
+  const itemId = req.body;
 
-  // Get and merge cart data
-  let user = await userData.getUserById(uid);
-  let dataSet = new Set(data.concat(user.cart));
+  console.log(itemId.itemId);
+  console.log(cart.includes(itemId.itemId));
+  if (!cart.includes(itemId.itemId)) cart.push(itemId.itemId);
 
-  // Insert data into cart
-  let result = await userData.updateUserCart(uid, Array.from(dataSet));
-  res.send(result);
+  return res.json({ itemInCart: cart.length });
 });
 
 router.get("/", (req, res) => {
