@@ -33,66 +33,31 @@ router.get("/", isAuthenticated, async (req, res) => {
 router.post(
   "/",
   isAuthenticated,
-  upload.single("itemImage"),
+  upload.single("itemimage"),
   async (req, res) => {
     console.log("in POST /item");
-    //console.log(req.file)
-    //console.log(req.body)
-    const newItemInfo = req.body;
+    const itemInfo = req.body;
+    console.log(itemInfo);
+    console.log(req.file.path);
 
-    if (!newItemInfo.ownerId) {
-      res
-        .status(400)
-        .json({ error: "You must provide the owner id to add a item" });
-      return;
-    }
-    if (!newItemInfo.name) {
-      res.status(400).json({ error: "You must provide a name to add a item" });
-      return;
-    }
-    if (!newItemInfo.description) {
-      res
-        .status(400)
-        .json({ error: "You must provide the description to add a item" });
-      return;
-    }
-    if (!newItemInfo.price) {
-      res
-        .status(400)
-        .json({ error: "You must provide the price to add a item" });
-      return;
-    }
-    if (!newItemInfo.amount) {
-      res
-        .status(400)
-        .json({ error: "You must provide the amount to add a item" });
-      return;
-    }
-    if (!newItemInfo.tag) {
-      res.status(400).json({ error: "You must provide a tag to add a item" });
-      return;
-    }
-    newItemInfo.information = {
-      name: newItemInfo.name,
-      description: newItemInfo.description,
-      image: req.file.path.replace(/\\/g, "/"), //get path here
-      price: newItemInfo.price,
-      amount: newItemInfo.amount
-    };
+    const ownerId = req.session.user.userId; // middleware iiAuthenticated make sure we can get access of the user in the route
+    const tag = itemInfo.tag;
+    delete itemInfo.tag;
+    console.log(tag);
+    itemInfo.image = req.file.path.replace(/\\/g, "/"); // get the path
 
     try {
-      const newItem = await itemData.addItem(
-        newItemInfo.ownerId,
-        newItemInfo.information,
-        newItemInfo.tag
-      );
-      //to be implemented
-      //...
-      //res.render()
-      res.json(newItem);
+      const newItem = await itemData.addItem(ownerId, itemInfo, tag);
+      return res.render("sellItemSuccess", {
+        userInfo: req.session.user,
+        itemInCart: req.session.cart.length,
+        item: newItem
+      });
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.status(500).render("errer", {
+        error: { status: 500, msg: "Somthing goes worng in our end..." }
+      });
       console.log(e);
       return;
     }
@@ -126,9 +91,18 @@ router.get("/tag/:tag", async (req, res) => {
     console.log(`got ${matchedItems.length} items`);
   } catch (e) {
     console.log(e);
+    return res
+      .status(500)
+      .render("error", {
+        error: { status: 500, msg: "Something goes wrong in our end..." }
+      });
   }
 
-  return res.status(200).json(matchedItems);
+  return res.render("showByTag", {
+    matchedItems: matchedItems,
+    userInfo: req.session.user,
+    itemInCart: req.session.cart.length
+  });
 });
 
 module.exports = router;

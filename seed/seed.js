@@ -36,7 +36,7 @@ async function addItemsByUser(userObj, tag, startIndex, cnt) {
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()0-9]/g, " ")
       .replace("png", "")
       .replace(/  +/g, " ");
-    information.image = `public/items_img/${itemsLst[i]}`;
+    information.image = `public/uploads/${itemsLst[i]}`;
 
     // add item to database, copy the item image file to the public/ folder
     await items.addItem(userObj._id, information, tag);
@@ -59,32 +59,32 @@ async function main() {
   await dbInitiation();
   await DATABASE.dropDatabase();
 
-  const CamilleSquare = await users.addUser(
-    "CamilleSquare",
+  const benjamin = await users.addUser(
+    "Benjamin",
     bcrypt.hashSync("Test123", salt),
     "2010000000",
-    "CamilleSquare@gmail.com"
+    "benji@moba.com"
   );
 
-  const EkkoSquare = await users.addUser(
-    "EkkoSquare",
+  const rob = await users.addUser(
+    "Rob",
     bcrypt.hashSync("Test123", salt),
     "2010000001",
-    "EkkoSquare@gmail.com"
+    "bestTA@moba.com"
   );
 
-  const FioraSquare = await users.addUser(
-    "FioraSquare",
+  const jake = await users.addUser(
+    "JakeLovrin",
     bcrypt.hashSync("Test123", salt),
     "2010000002",
-    "FioraSquare@gmail.com"
+    "gamedevgeek@moba.com"
   );
 
   //add items
   let CNT = 0;
-  await addItemsByUser(CamilleSquare, "lol", 33, CNT);
-  await addItemsByUser(EkkoSquare, "dota", 68, CNT);
-  await addItemsByUser(FioraSquare, "lol", 100, CNT);
+  await addItemsByUser(jake, "lol", 33, CNT);
+  await addItemsByUser(rob, "dota", 68, CNT);
+  await addItemsByUser(benjamin, "lol", 100, CNT);
 
   console.log("Done seeding database");
   console.log(`

@@ -42,20 +42,6 @@ hr.footer-hr:after {
     max-width: 400px;
 }
 
-/* #log-in-bg, #sign-up-bg {
-    height: 71vh;
-    position: absolute;
-    top: 50px;
-    left:0px;
-    z-index: -1;
-    filter: blur(4px);
-    background: center url(/public/img/patrick-delmastro-finalinn.jpg) no-repeat;
-    background-size: cover;
-} */
-
-/* #log-in-section {
-    height: calc(100vh - 277.72px);
-} */
-
-/* #sign-up-section {
-} */
+#itemimagelable::after {
+    visibility: hidden;
+}

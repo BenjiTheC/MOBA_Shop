@@ -1,7 +1,66 @@
 <section class="container row my-md-2 mx-auto" id="item-form">
 
   <div class="col-md-8">
-    <h1 class='display-3'>Marker</h1>
+    <form class="p-5 border border-light bg-light rounded rounded-lg" id="sell-item-form" method="POST" action="/items"
+      enctype="multipart/form-data">
+
+      <div class="col-12 text-center">
+
+        <img class="mb-4 p-3 bg-dark rounded rounded-lg" src="/public/img/logo.png" style="width:250px;height:auto">
+      </div>
+
+      <div class="form-group">
+        <label for="name" class="mb-0">Item Name</label>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Item Name" required>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" accept="image/*" class="custom-file-input" name="itemimage" id="itemimage" required>
+            <label class="custom-file-label bg-dark text-light text-center" id="itemimagelable" for="itemimage">Upload
+              your
+              item's picture!</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="mb-0">Item Description</label>
+        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Describe your item!"
+          required></textarea>
+      </div>
+
+      <div class="form-group form-inline justify-content-between">
+        <div class="input-group col-md-4 p-0">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-dark text-light">Price: </span>
+          </div>
+          <input type="number" name="price" id="price" class="form-control" placeholder="9999" required>
+        </div>
+
+        <div class="input-group col-md-4 p-0">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-dark text-light">Amount: </span>
+          </div>
+          <input type="number" name="amount" id="amount" class="form-control" placeholder="1" required>
+        </div>
+
+        <div class="input-group col-md-4 p-0">
+          <div class="input-group-prepend">
+            <label class="input-group-text input-group-text bg-dark text-light" for="tag">Tag: </label>
+          </div>
+          <select class="custom-select" name="tag" id="tag" required>
+            <option value="lol">League of Legends</option>
+            <option value="dota">DoTA</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn btn-dark ml-auto d-flex">Post your good!</button>
+
+    </form>
   </div>
 
   {{> sideBar}}
