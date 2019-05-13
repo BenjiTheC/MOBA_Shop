@@ -1,12 +1,13 @@
 <div class="col-md-4 mx-0 pt-1">
   {{#if userInfo}}
-  <div class="card pt-3 px-3 col-10 mx-auto" id="user-info">
+  <div class="card pt-3 px-3 col-10 mx-auto user-card" id="{{userInfo.userId}}">
 
     <div class="card-body p-2 mt-2">
       <a href="/users/{{userInfo.userId}}" style="color: inherit">
-        <h5 class="card-title mb-2">{{userInfo.userName}}</h5>
+        <h5 class="card-title mb-2" id="user-name">{{userInfo.userName}}</h5>
       </a>
-      <p class="card-text mb-2">Asset: {{userInfo.userAsset}} <span class="badge badge-pill badge-dark">MBCoin</span>
+      <p class="card-text mb-2">Asset: <span id="user-asset">{{userInfo.userAsset}}</span> <span
+          class="badge badge-pill badge-dark">MBCoin</span>
       </p>
     </div>
   </div>

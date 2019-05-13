@@ -11,17 +11,13 @@ const conData = data.conversation;
 // need to check all the id are valid
 router.post("/", async (req, res) => {
   console.log("in POST /conversation route");
-  console.log(req.query.itemId);
-  console.log(req.query.posterId);
-  const newcomment = req.body;
+  console.log(req.body);
 
-  const itemId = req.query.itemId;
-  const posterId = req.query.posterId;
-  const comment = newcomment.comment;
+  const { itemId, posterId, comment } = req.body;
 
   const newCon = await conData.addCon(itemId, posterId, comment);
 
-  res.json(newCon);
+  return res.redirect(`/items/${itemId}`);
 });
 
 //this put route will add a reply to a existed route by add a comment into the replyArray
@@ -29,19 +25,11 @@ router.post("/", async (req, res) => {
 // need to check all the id are valid
 router.put("/", async (req, res) => {
   console.log("in add reply route");
-  console.log(req.query.conId);
-  console.log(req.query.posterId);
-  const newReply = req.body;
 
-  if (!newReply.comment || typeof newReply.comment !== "string")
-    throw "invalid input comment";
-
-  const conId = req.query.conId;
-  const posterId = req.query.posterId;
-  const comment = newReply.comment;
+  const { conId, posterId, comment } = req.body;
   try {
     const updatedCon = await conData.addReply(conId, comment, posterId);
-    res.json(updatedCon);
+    if (updatedCon) return res.json({ conId, comment });
   } catch (e) {
     console.log(e);
   }

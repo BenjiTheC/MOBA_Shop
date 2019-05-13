@@ -119,7 +119,8 @@ const exportedMethod = {
         description: currentInfo.information.description,
         image: currentInfo.information.image,
         price: currentInfo.information.price,
-        tag: currentInfo.tag
+        tag: currentInfo.tag,
+        isPurchase: currentInfo.isPurchase
       };
       output.push(itemWithOwner);
     }
@@ -149,7 +150,8 @@ const exportedMethod = {
       description: item.information.description,
       image: item.information.image,
       price: item.information.price,
-      tag: item.tag
+      tag: item.tag,
+      isPurchase: item.isPurchase
     };
     return itemInfo;
   },
@@ -177,9 +179,12 @@ const exportedMethod = {
     if (!information.image) throw "you must provide a url for image";
     if (!information.price) throw "you must provide a price";
     if (!tag) throw "you must provide a tag";
+
+    const ownerObjId = ObjectId(ownerId);
+
     const itemCollection = await items();
     let newItem = {
-      ownerId: ownerId,
+      ownerId: ownerObjId,
       information: information,
       tag: tag,
       isPurchase: false,

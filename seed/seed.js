@@ -66,17 +66,24 @@ async function main() {
     "benji@moba.com"
   );
 
+  const siyuan = await users.addUser(
+    "SiyuanHe",
+    bcrypt.hashSync("Test123", salt),
+    "2010000001",
+    "databaseguru@moba.com"
+  );
+
   const rob = await users.addUser(
     "Rob",
     bcrypt.hashSync("Test123", salt),
-    "2010000001",
+    "2010000002",
     "bestTA@moba.com"
   );
 
   const jake = await users.addUser(
     "JakeLovrin",
     bcrypt.hashSync("Test123", salt),
-    "2010000002",
+    "2010000003",
     "gamedevgeek@moba.com"
   );
 
@@ -84,6 +91,7 @@ async function main() {
   let CNT = 0;
   await addItemsByUser(jake, "lol", 33, CNT);
   await addItemsByUser(rob, "dota", 68, CNT);
+  await addItemsByUser(siyuan, "dota", 25, CNT);
   await addItemsByUser(benjamin, "lol", 100, CNT);
 
   console.log("Done seeding database");

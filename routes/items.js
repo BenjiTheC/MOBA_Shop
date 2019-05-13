@@ -68,7 +68,7 @@ router.get("/:id", async (req, res) => {
   console.log(`in GET /items/${req.params.id}`);
   try {
     const item = await itemData.getItemWithOwnerAndCon(req.params.id);
-
+    console.log(item);
     res.render("itemDetail", {
       item: item,
       userInfo: req.session.user,
@@ -91,11 +91,9 @@ router.get("/tag/:tag", async (req, res) => {
     console.log(`got ${matchedItems.length} items`);
   } catch (e) {
     console.log(e);
-    return res
-      .status(500)
-      .render("error", {
-        error: { status: 500, msg: "Something goes wrong in our end..." }
-      });
+    return res.status(500).render("error", {
+      error: { status: 500, msg: "Something goes wrong in our end..." }
+    });
   }
 
   return res.render("showByTag", {

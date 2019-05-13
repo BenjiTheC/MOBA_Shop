@@ -20,15 +20,76 @@
           <p class="lead">{{item.description}}</p>
           <hr class="item-detail">
           <p id="{{item.ownerId}}">Owner: {{item.ownerName}}</p>
+          {{#unless item.isPurchase}}
           <button class="btn btn-dark btn-lg btn-block border-light" id="{{item.itemId}}|{{item._id}}"
             onclick="addToCart(this.id)">Add
             to
             Cart</button>
+          {{/unless}}
         </div>
 
       </div>
 
     </div>
+
+    {{#if userInfo}}
+    <form id="new-conversation" method="POST" action="/conversation">
+
+      <div class="input-group col-12 px-0">
+
+        <input type="hidden" name="itemId" id="itemId" value="{{item._id}}" />
+        <input type="hidden" name="posterId" id="posterId" value="{{userInfo.userId}}" />
+
+        <label for="comment" class="sr-only">Start a new conversation</label>
+        <textarea class="form-control rounded" name="comment" id="comment" rows="1"
+          placeholder="Put something words you like!" required></textarea>
+
+        <div class="input-group-append">
+          <button class="btn btn-dark text-light" type="submit">Start Conversation</button>
+        </div>
+
+      </div>
+    </form>
+
+    {{else}}
+    <div class="alert alert-warning col-12" role="alert">
+      <strong>Log in to start a conversation</strong>
+    </div>
+    {{/if}}
+
+    {{#each item.conversation as |con|}}
+    <ul class="list-group my-2" id="con-{{con._id}}">
+      {{#each con.commentsArray as |comments|}}
+      <li class="list-group-item">{{comments.posterName}}: {{comments.comment}}</li>
+      {{/each}}
+
+      {{#if ../userInfo}}
+
+      <li class="list-group-item">
+        <form action="/conversation" method="GET" class="reply-form" id="form-{{con._id}}">
+          <div class="input-group col-12 px-0">
+
+            <label for="txt-ara-{{con._id}}" class="sr-only">Reply under conversation</label>
+            <textarea class="form-control rounded" name="comment" id="txt-ara-{{con._id}}" rows="1"
+              placeholder="Reply something words you like!" required></textarea>
+
+            <div class="input-group-append">
+              <button class="btn btn-dark text-light reply-button" id="btn-{{con._id}}" type="submit">Reply</button>
+            </div>
+
+          </div>
+        </form>
+      </li>
+      {{else}}
+      <li class="list-group-item">
+        <div class="alert alert-warning m-0 p-0" role="alert">
+          <strong>Log in to reply</strong>
+        </div>
+      </li>
+      {{/if}}
+
+    </ul>
+    {{/each}}
   </div>
 
   {{> sideBar}}

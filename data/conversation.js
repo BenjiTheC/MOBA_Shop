@@ -8,14 +8,17 @@ const exportedMethod = {
   async getConByItemId(itemId) {
     if (!itemId) throw "you must provide an id to search for";
     if (!ObjectId.isValid(itemId)) throw "invalid input id";
+
     const conCollection = await conversation();
     const conversations = await conCollection
       .find({ itemId: itemId })
       .toArray();
+
     let conWithPosterId = [];
     for (let i = 0; i < conversations.length; i++) {
       let replyWithPosterId = [];
       const commentsArray = conversations[i].commentsArray;
+
       for (let j = 0; j < commentsArray.length; j++) {
         const userInfo = await users.getUserById(commentsArray[j].posterId);
         let newReplyInfo = {
@@ -25,6 +28,7 @@ const exportedMethod = {
         };
         replyWithPosterId.push(newReplyInfo);
       }
+
       let newConInfo = {
         _id: conversations[i]._id,
         itemId: conversations[i].itemId,
@@ -39,6 +43,7 @@ const exportedMethod = {
   async getConById(id) {
     if (!id) throw "you must provide an id to search for";
     if (!ObjectId.isValid(id)) throw "invalid input id";
+
     const conCollection = await conversation();
     const con = await conCollection.findOne({ _id: ObjectId(id) });
     if (con === null) throw "no conversation with that id";
@@ -51,6 +56,7 @@ const exportedMethod = {
       throw "you must provide a poster id";
     if (!comment || !typeof comment === "string")
       throw "you must provide a comment";
+
     const replyCon = await this.getConById(conId);
     let commentsArray = replyCon.commentsArray;
     const replyComment = {
@@ -61,6 +67,7 @@ const exportedMethod = {
     let updateData = {
       commentsArray: commentsArray
     };
+
     const conCollection = await conversation();
     const updatedInfo = await conCollection.updateOne(
       { _id: ObjectId(conId) },

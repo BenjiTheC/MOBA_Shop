@@ -90,7 +90,7 @@ const exportedMethod = {
           $addToSet: { purchaseHistory: { $each: updateObj.purchaseHistory } }
         }
       );
-      console.log(updatedInfo);
+      // console.log(updatedInfo);
     } catch (e) {
       console.log(e);
     }

@@ -11,6 +11,7 @@ const getItemObjOfCart = async cart => {
     let itemObj;
     try {
       itemObj = await itemData.getItemById(itemId);
+      // console.log(itemObj);
     } catch (e) {
       console.log(e);
     }
@@ -88,7 +89,7 @@ router.get("/purchase", isAuthenticated, async (req, res) => {
 });
 
 router.post("/purchase", isAuthenticated, async (req, res) => {
-  console.log("in POST /purchase");
+  console.log("in POST /purchase"); // this route will be hitted by ajax
   const updateObj = {}; // update data pass into the data module
   const total = parseInt(req.body.total);
   const user = req.session.user;
@@ -116,7 +117,10 @@ router.post("/purchase", isAuthenticated, async (req, res) => {
 
   req.session.cart = []; // empty the cart after purchase
 
-  return res.json(true);
+  return res.json({
+    itemInCart: req.session.cart.length,
+    userAsset: user.userAsset
+  });
 });
 
 module.exports = router;
