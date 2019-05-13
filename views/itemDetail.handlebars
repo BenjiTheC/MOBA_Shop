@@ -21,7 +21,7 @@
           <hr class="item-detail">
           <p id="{{item.ownerId}}">Owner: {{item.ownerName}}</p>
           {{#unless item.isPurchase}}
-          <button class="btn btn-dark btn-lg btn-block border-light" id="{{item.itemId}}|{{item._id}}"
+          <button class="btn btn-dark btn-lg btn-block border-light" id="{{item._id}}|{{item._id}}"
             onclick="addToCart(this.id)">Add
             to
             Cart</button>

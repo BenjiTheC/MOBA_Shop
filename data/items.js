@@ -48,11 +48,9 @@ const exportedMethod = {
     const allItems = await this.getAllItems();
     let itemLst = [];
 
-    const startIndex = allItems.length
-      ? allItems.length - num
-      : allItems.length;
+    const endIndex = allItems.length > num ? allItems.length - num : 0;
 
-    for (let i = startIndex; i < allItems.length; i++) {
+    for (let i = allItems.length - 1; i >= endIndex; i--) {
       let tempItem = allItems[i];
       const itemInfo = {
         itemPic: tempItem.information.image,

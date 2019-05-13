@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
   const cart = req.session.cart;
 
   const itemsObjInCart = await getItemObjOfCart(cart);
-
+  console.log(itemsObjInCart);
   return res.render("cartDetail", {
     userInfo: req.session.user,
     itemInCart: req.session.cart.length,
@@ -70,7 +70,7 @@ router.get("/purchase", isAuthenticated, async (req, res) => {
   const originalLen = itemsObjInCart.length;
 
   itemsObjInCart = itemsObjInCart.filter(item => {
-    return item.ownerId != user.userId; // didn't user !== because ownerId is object and userId is string. Only compare the value
+    return item.ownerId != user.userId; // didn't use !== because ownerId is object and userId is string. Only compare the value
   });
   const calculateLen = itemsObjInCart.length;
 
@@ -94,14 +94,18 @@ router.post("/purchase", isAuthenticated, async (req, res) => {
   const total = parseInt(req.body.total);
   const user = req.session.user;
   const cart = req.session.cart;
-  const reconciledCart = await getItemObjOfCart(cart); //not necessary an array of objects, can be optimized
+  const itemsObjInCart = await getItemObjOfCart(cart); //not necessary an array of objects, can be optimized
 
   user.userAsset -= total;
 
   updateObj.virtualConcurrency = user.userAsset;
-  updateObj.purchaseHistory = reconciledCart.map(item => {
-    return item._id;
-  });
+  updateObj.purchaseHistory = itemsObjInCart
+    .filter(item => {
+      return item.ownerId != user.userId;
+    })
+    .map(item => {
+      return item._id;
+    }); // filter out the item belong to current logged in user, get the id of remaining
 
   let updatedUser;
   try {
