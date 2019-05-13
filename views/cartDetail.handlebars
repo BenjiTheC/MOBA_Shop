@@ -1,0 +1,38 @@
+<section class="container row my-md-2 mx-auto" id="cart-detail">
+  <div class="col-md-8 col-12 mx-0" id="items-grid">
+    <div class="row">
+      {{#if itemsObjInCart}}
+      {{#each itemsObjInCart}}
+      <div class="col-lg-4 col-sm-6 col-12 p-1">
+        <div class="card">
+          <a href="/items/{{this.itemId}}" style="color: inherit">
+            <img src="/{{this.image}}" class="card-img-top" alt="item-pic">
+          </a>
+          <div class="card-body p-2">
+            <a href="/items/{{this.itemId}}" style="color: inherit">
+              <h6 class="card-title my-1">{{this.itemName}}</h6>
+            </a>
+            <p class="card-text my-1">{{this.price}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
+
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      <a name="cart-confirm" id="cart-confirm" class="btn btn-dark btn-lg btn-block" href="/cart/purchase"
+        role="button">Confirm &
+        Pay</a>
+      {{else}}
+      <div class="jumbotron col-12 text-center">
+        <p class="lead">Oops... Seems like you haven't picked up anything.</p>
+        <p class="lead">Worry not! Go check out our most recent dope goods!</p>
+        <hr class="my-2">
+        <p class="lead">
+          <a class="btn btn-dark btn-lg text-light btn-block" href="/" role="button">Check it out!</a>
+        </p>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+  {{> sideBar}}
+</section>

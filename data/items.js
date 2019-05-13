@@ -198,7 +198,7 @@ const exportedMethod = {
     }
 
     let data = {
-      isPurchased: status
+      isPurchase: status
     };
     const itemCollection = await items();
     return await itemCollection.updateOne(

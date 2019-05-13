@@ -11,6 +11,21 @@ function addToCart(combinedId) {
   );
 }
 
+const placeOrder = event => {
+  const totalPriceStr = $("#total-price")[0].innerText;
+  const total = totalPriceStr.split(" ")[0];
+
+  $.post(
+    "/cart/purchase",
+    { total },
+    () => {
+      $("#place-order").attr("class", "btn btn-lg btn-success text-light mb-3");
+      $("#place-order").html("You order has been placed!");
+    },
+    "json"
+  );
+};
+
 if ($("#passwordNotMatch").length > 0) {
   $("#password").css("border", "2px solid red");
   $("#confirmPassword").css("border", "2px solid red");

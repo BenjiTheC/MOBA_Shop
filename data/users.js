@@ -73,15 +73,36 @@ const exportedMethod = {
       throw "Could not delete user with id of ${id}";
   },
 
+  async purchaseUpdate(userId, updateObj) {
+    if (!userId) throw "you must provide an id to search for";
+    if (updateObj.virtualConcurrency === undefined)
+      throw "virtualConcrrency data missing!";
+    if (!updateObj.purchaseHistory || !Array.isArray(updateObj.purchaseHistory))
+      throw "purchaseHistory invalid!";
+
+    const userCollection = await users();
+
+    try {
+      const updatedInfo = await userCollection.updateOne(
+        { _id: ObjectId(userId) },
+        {
+          $set: { virtualConcurrency: updateObj.virtualConcurrency },
+          $addToSet: { purchaseHistory: { $each: updateObj.purchaseHistory } }
+        }
+      );
+      console.log(updatedInfo);
+    } catch (e) {
+      console.log(e);
+    }
+    return await this.getUserById(userId);
+  },
+
   async updateUser(id, updateUser) {
     if (!id) throw "you must provide an id to search for";
     if (!ObjectId.isValid(id)) throw "invalid input id";
 
     //add new info here
-    if (
-      !updateUser.phone &&
-      !updateUser.email
-    ) {
+    if (!updateUser.phone && !updateUser.email) {
       throw "you must provide a nick name or phone or age or gender or email to be updated";
     }
     const userCollection = await users();

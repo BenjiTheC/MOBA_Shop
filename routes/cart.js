@@ -3,6 +3,21 @@ const router = express.Router({ mergeParams: true });
 const data = require("../data");
 const userData = data.users;
 const itemData = data.items;
+const { isAuthenticated } = require("../middlewares");
+
+const getItemObjOfCart = async cart => {
+  const itemsObjInCart = [];
+  for (let itemId of cart) {
+    let itemObj;
+    try {
+      itemObj = await itemData.getItemById(itemId);
+    } catch (e) {
+      console.log(e);
+    }
+    itemsObjInCart.push(itemObj);
+  }
+  return itemsObjInCart;
+};
 
 router.post("/", async (req, res) => {
   console.log("in POST /cart");
@@ -17,9 +32,19 @@ router.post("/", async (req, res) => {
   return res.json({ itemInCart: cart.length });
 });
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   console.log("in GET /cart");
-  res.send("test");
+  if (!req.session.cart) req.session.cart = []; // make a new cart if there is not cart/cart empty
+
+  const cart = req.session.cart;
+
+  const itemsObjInCart = await getItemObjOfCart(cart);
+
+  return res.render("cartDetail", {
+    userInfo: req.session.user,
+    itemInCart: req.session.cart.length,
+    itemsObjInCart: itemsObjInCart
+  });
 });
 
 router.delete("/:itemId", async (req, res) => {
@@ -35,37 +60,63 @@ router.delete("/:itemId", async (req, res) => {
   return res.send(await userData.getUserCartItems(uid));
 });
 
-router.post("/:itemId/purchase", async (req, res) => {
+router.get("/purchase", isAuthenticated, async (req, res) => {
+  console.log("in GET /cart/purchase");
+
+  const user = req.session.user,
+    cart = req.session.cart;
+  let itemsObjInCart = await getItemObjOfCart(cart);
+  const originalLen = itemsObjInCart.length;
+
+  itemsObjInCart = itemsObjInCart.filter(item => {
+    return item.ownerId != user.userId; // didn't user !== because ownerId is object and userId is string. Only compare the value
+  });
+  const calculateLen = itemsObjInCart.length;
+
+  let totalPrice = 0;
+  itemsObjInCart.forEach(item => {
+    totalPrice += item.price;
+  });
+
+  return res.render("cartConfirm", {
+    userInfo: req.session.user,
+    itemInCart: req.session.cart.length,
+    itemsObjInCart: itemsObjInCart,
+    lengthDiff: originalLen - calculateLen,
+    totalPrice: totalPrice
+  });
+});
+
+router.post("/purchase", isAuthenticated, async (req, res) => {
   console.log("in POST /purchase");
-  let itemId = req.params.itemId;
-  let uid = req.params.uid;
-  let item = await itemData.getItemById(itemId);
+  const updateObj = {}; // update data pass into the data module
+  const total = parseInt(req.body.total);
+  const user = req.session.user;
+  const cart = req.session.cart;
+  const reconciledCart = await getItemObjOfCart(cart); //not necessary an array of objects, can be optimized
 
-  if (item.isPurchased == true) {
-    return res.status(400).send("The item has been purchased");
+  user.userAsset -= total;
+
+  updateObj.virtualConcurrency = user.userAsset;
+  updateObj.purchaseHistory = reconciledCart.map(item => {
+    return item._id;
+  });
+
+  let updatedUser;
+  try {
+    // update the user's asset and purchase history
+    updatedUser = await userData.purchaseUpdate(user.userId, updateObj);
+  } catch (e) {
+    console.log(e);
   }
-  let user = await userData.getUserById(uid);
 
-  if (
-    parseInt(user.virtualConcurrency) <= 0 ||
-    parseInt(user.virtualConcurrency) < parseInt(item.amount)
-  ) {
-    return res.status(400).send("You don't have enough money!!!");
-  }
+  updateObj.purchaseHistory.forEach(async itemId => {
+    await itemData.updateItemPurchaseStatus(itemId, true);
+  });
 
-  // charge user's money
-  await userData.updateVirtualConcurrency(
-    uid,
-    user.virtualConcurrency - item.amount
-  );
+  req.session.cart = []; // empty the cart after purchase
 
-  // set purchase status to be true
-  await itemData.updateItemPurchaseStatus(itemId, true);
-
-  // add to history
-  await userData.addPurhcaseHistory(uid, itemId);
-
-  return res.send(await userData.getUserById(uid));
+  return res.json(true);
 });
 
 module.exports = router;

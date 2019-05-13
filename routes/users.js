@@ -56,12 +56,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/cart", async (req, res) => {
-  console.log(`in GET /${req.params.id}/cart`);
-
-  res.render("userCart", {});
-});
-
 router.put("/:id", async (req, res) => {
   const inputInfo = req.body;
 

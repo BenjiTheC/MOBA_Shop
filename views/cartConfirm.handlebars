@@ -1,0 +1,50 @@
+<section class="container row my-md-2 mx-auto" id="cart-confirm">
+  <div class="col-md-8 col-12 mx-0" id="items-grid">
+    <div class="row">
+      {{#if lengthDiff}}
+      <div class="alert alert-warning col-12" role="alert">
+        You chose {{lengthDiff}} items of your own. These items have been excluded for checking out.
+      </div>
+      {{/if}}
+      {{#if itemsObjInCart}}
+      <div class="btn-group col-md-6">
+        <p class="btn btn-lg btn-dark text-light">Total:</p>
+        <p class="btn btn-lg btn-outline-dark" id="total-price">{{totalPrice}} <span
+            class="badge badge-pill badge-dark">MBCoin</span>
+        </p>
+      </div>
+      <div class="btn-group col-md-6">
+        <button class="btn btn-lg btn-dark text-light mb-3" id="place-order" onclick="placeOrder()">Place the
+          Order</button>
+      </div>
+      {{#each itemsObjInCart}}
+      <div class="col-lg-4 col-sm-6 col-12 p-1">
+        <div class="card">
+          <a href="/items/{{this.itemId}}" style="color: inherit">
+            <img src="/{{this.image}}" class="card-img-top" alt="item-pic">
+          </a>
+          <div class="card-body p-2">
+            <a href="/items/{{this.itemId}}" style="color: inherit">
+              <h6 class="card-title my-1">{{this.itemName}}</h6>
+            </a>
+            <p class="card-text my-1">{{this.price}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
+
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="jumbotron col-12 text-center">
+        <p class="lead">Oops... Seems like you haven't picked up anything.</p>
+        <p class="lead">Worry not! Go check out our most recent dope goods!</p>
+        <hr class="my-2">
+        <p class="lead">
+          <a class="btn btn-dark btn-lg text-light btn-block" href="/" role="button">Check it out!</a>
+        </p>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+  {{> sideBar}}
+</section>
