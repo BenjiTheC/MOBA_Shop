@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const userData = require("../data/users");
 const router = express.Router();
+const xss = require("xss");
 
 const saltRounds = 5;
 
@@ -15,7 +16,7 @@ router.post("/login", async (req, res) => {
   console.log("in POST /authen/login");
   console.log(req.body);
 
-  const username = req.body.userAccount;
+  const username = xss(req.body.userAccount);
 
   let found_user;
   try {
@@ -33,7 +34,7 @@ router.post("/login", async (req, res) => {
     });
   }
 
-  const passwd = req.body.userPassword;
+  const passwd = xss(req.body.userPassword);
   const passwd_accepted = await bcrypt.compare(
     passwd,
     found_user.hashedPassword
@@ -60,8 +61,12 @@ router.get("/signup", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   console.log("in POST /authen/signup");
-
-  const { username, password, confirmPassword, phone, email } = req.body;
+  //const { username, password, confirmPassword, phone, email } = req.body;
+    const username = xss(req.body.username);
+    const password = xss(req.body.password);
+    const confirmPassword = xss(req.body.confirmPassword);
+    const phone = xss(req.body.phone);
+    const email = xss(req.body.email);
 
   for (let i = 0; i < username.length; i++) {
     if (

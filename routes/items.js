@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const itemData = data.items;
 const { isAuthenticated } = require("../middlewares");
+const xss = require("xss");
 
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -36,7 +37,14 @@ router.post(
   upload.single("itemimage"),
   async (req, res) => {
     console.log("in POST /item");
-    const itemInfo = req.body;
+    //const itemInfo = req.body;
+      const itemInfo = {
+          name: xss(req.body.name),
+          description: xss(req.body.description),
+          price: xss(req.body.price),
+          amount: xss(req.body.amount),
+          tag: xss(req.body.tag)
+      }
     console.log(itemInfo);
     console.log(req.file.path);
 
