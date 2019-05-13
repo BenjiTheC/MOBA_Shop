@@ -74,9 +74,15 @@ $(".reply-form").submit(function(e) {
         .parent()
         .prev();
 
-      const conLst = $(`#con-${conId}`);
       const newComment = $(
-        `<li class="list-group-item">${posterName}: ${comment}</li>`
+        `<li class="list-group-item d-flex align-items-center">
+        <span class="fas fa-angle-double-right"></span>
+        &nbsp;&nbsp;&nbsp;${comment}
+        <span class="btn-group ml-auto">
+          <span class="btn btn-outline-dark">By: </span>
+          <span class="btn btn-dark text-light text-left">${posterName}</span>
+        </span>
+      </li>`
       );
       newComment.insertAfter(liB4TheForm);
       $(`#txt-ara-${conId}`).val("");

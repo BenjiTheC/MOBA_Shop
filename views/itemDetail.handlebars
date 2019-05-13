@@ -58,9 +58,16 @@
     {{/if}}
 
     {{#each item.conversation as |con|}}
-    <ul class="list-group my-2" id="con-{{con._id}}">
+    <ul class="list-group rounded border my-2 reply-list" id="con-{{con._id}}">
       {{#each con.commentsArray as |comments|}}
-      <li class="list-group-item">{{comments.posterName}}: {{comments.comment}}</li>
+      <li class="list-group-item d-flex align-items-center">
+        <span class="fas fa-angle-double-right"></span>
+        &nbsp;&nbsp;&nbsp;{{comments.comment}}
+        <span class="btn-group ml-auto">
+          <span class="btn btn-outline-dark bg-light">By: </span>
+          <span class="btn btn-dark text-light text-left">{{comments.posterName}}</span>
+        </span>
+      </li>
       {{/each}}
 
       {{#if ../userInfo}}
