@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const conData = data.conversation;
+const xss = require("xss");
 
 //next step: find user name by user id and return!
 
@@ -13,7 +14,10 @@ router.post("/", async (req, res) => {
   console.log("in POST /conversation route");
   console.log(req.body);
 
-  const { itemId, posterId, comment } = req.body;
+  //const { itemId, posterId, comment } = req.body;
+    const itemId = xss(req.body.itemId);
+    const posterId = xss(req.body.posterId);
+    const comment = xss(req.body.comment);
 
   const newCon = await conData.addCon(itemId, posterId, comment);
 
@@ -26,7 +30,11 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   console.log("in add reply route");
 
-  const { conId, posterId, comment } = req.body;
+  //const { conId, posterId, comment } = req.body;
+    const conId = xss(req.body.conId);
+    const posterId = xss(req.body.posterId);
+    const comment = xss(req.body.comment);
+
   try {
     const updatedCon = await conData.addReply(conId, comment, posterId);
     if (updatedCon) return res.json({ conId, comment });
