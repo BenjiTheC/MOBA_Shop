@@ -19,15 +19,25 @@ Use `sudo` command in case of permission denied, then try to run the MongoDB dea
 sudo mongod
 ```
 
-2. Dump the data into the database
+2. Install denpendency
 
-Our seeding script `seed.js` is put under the directory `seed/`. We are assuming that the person reading this instruction has Node.js and npm already installed. Under the repository, execute the following command to run the seeding script. 
+We have used multiple external Node.js packages, use `npm` to install it. We are assuming that the person reading this instruction has `npm` already installed.
+
+```shell
+npm install
+```
+
+This command will automatically install the denpendency packages specified in [package.json](package.json)
+
+3. Dump the data into the database
+
+Our seeding script `seed.js` is put under the directory `seed/`. We are assuming that the person reading this instruction has Node.js already installed. Under the repository, execute the following command to run the seeding script. 
 
 ```shell
 node seed/seed.js
 ```
 
-3. Run the server up!
+4. Run the server up!
 
 In [`package.json`](package.json) we have configured the npm command to fire up the server. Execute the following command.
 
