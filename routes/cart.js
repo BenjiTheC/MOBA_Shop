@@ -22,16 +22,16 @@ const getItemObjOfCart = async cart => {
 };
 
 router.post("/", async (req, res) => {
-  console.log("in POST /cart");
+  // console.log("in POST /cart");
   // this route will be hitted by ajax
   if (!req.session.cart) req.session.cart = []; // make a new cart if there is not cart/cart empty
 
   const cart = req.session.cart;
   //const ids = req.body;
-    const ids = {
-        itemId: xss(req.body.itemId),
-        ownerId: xss(req.body.ownerId)
-    }
+  const ids = {
+    itemId: xss(req.body.itemId),
+    ownerId: xss(req.body.ownerId)
+  };
 
   if (!cart.includes(ids.itemId)) cart.push(ids.itemId);
 
@@ -39,13 +39,12 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  console.log("in GET /cart");
+  // console.log("in GET /cart");
   if (!req.session.cart) req.session.cart = []; // make a new cart if there is not cart/cart empty
 
   const cart = req.session.cart;
 
   const itemsObjInCart = await getItemObjOfCart(cart);
-  console.log(itemsObjInCart);
   return res.render("cartDetail", {
     userInfo: req.session.user,
     itemInCart: req.session.cart.length,
@@ -54,7 +53,7 @@ router.get("/", async (req, res) => {
 });
 
 router.delete("/:itemId", async (req, res) => {
-  console.log("in DELETE /item");
+  // console.log("in DELETE /item");
   let itemId = req.params.itemId;
   let uid = req.params.uid;
 
@@ -67,7 +66,7 @@ router.delete("/:itemId", async (req, res) => {
 });
 
 router.get("/purchase", isAuthenticated, async (req, res) => {
-  console.log("in GET /cart/purchase");
+  // console.log("in GET /cart/purchase");
 
   const user = req.session.user,
     cart = req.session.cart;
@@ -94,7 +93,7 @@ router.get("/purchase", isAuthenticated, async (req, res) => {
 });
 
 router.post("/purchase", isAuthenticated, async (req, res) => {
-  console.log("in POST /purchase"); // this route will be hitted by ajax
+  // console.log("in POST /purchase"); // this route will be hitted by ajax
   const updateObj = {}; // update data pass into the data module
   const total = parseInt(xss(req.body.total));
   const user = req.session.user;

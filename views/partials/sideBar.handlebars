@@ -4,7 +4,7 @@
 
     <div class="card-body p-2 mt-2">
       <a href="/users/{{userInfo.userId}}" style="color: inherit">
-        <h5 class="card-title mb-2" id="user-name">{{userInfo.userName}}</h5>
+        <p class="card-title mb-2 display-4" id="user-name">{{userInfo.userName}}</p>
       </a>
       <p class="card-text mb-2">Asset: <span id="user-asset">{{userInfo.userAsset}}</span> <span
           class="badge badge-pill badge-dark">MBCoin</span>
@@ -30,12 +30,16 @@
   <div class="row">
     <div class="card col-6 border-0 mt-2" id="tag-lol">
       <img class="card-img-top bg-light" alt="tag-lol" src="/public/img/tag-lol.png">
-      <a href="/items/tag/lol" class="stretched-link"></a>
+      <a href="/items/tag/lol" class="stretched-link">
+        <p class="text-dark sr-only">Category: League of Legends</p>
+      </a>
     </div>
 
     <div class="card col-6 border-0 mt-2" id="tag-dota">
       <img class="card-img-top bg-light" alt="tag-dota" src="/public/img/tag-dota2.png">
-      <a href="/items/tag/dota" class="stretched-link"></a>
+      <a href="/items/tag/dota" class="stretched-link">
+        <p class="text-dark sr-only">Category: DoTA</p>
+      </a>
     </div>
   </div>
 

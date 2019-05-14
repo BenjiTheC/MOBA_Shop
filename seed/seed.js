@@ -19,7 +19,7 @@ const dbInitiation = async () => {
     });
     DATABASE = await CONNECTION.db("MOBA_Shop_DB");
   }
-  console.log("Database connected.");
+  console.log("Database connected.\n\n");
 };
 
 async function addItemsByUser(userObj, tag, startIndex, cnt) {
@@ -94,11 +94,7 @@ async function main() {
   await addItemsByUser(siyuan, "dota", 25, CNT);
   await addItemsByUser(benjamin, "lol", 100, CNT);
 
-  console.log("Done seeding database");
-  console.log(`
-  Hi Prof. Hill!
-  Please press ctrl-c for this script to exit, as the MongoDB has changed the metod of closing the database. :p
-  `);
+  console.log("\nDone seeding database");
   try {
     await CONNECTION.close(); //meet a problem here!!!!!!
   } catch (e) {

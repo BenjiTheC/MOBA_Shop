@@ -1,5 +1,5 @@
 <section class="container row my-md-2 mx-auto" id="item-form">
-
+  <h1 class="sr-only">Sell Item Form</h1>
   <div class="col-md-8">
     <form class="p-5 border border-light bg-light rounded rounded-lg" id="sell-item-form" method="POST" action="/items"
       enctype="multipart/form-data">
@@ -36,14 +36,14 @@
           <div class="input-group-prepend">
             <span class="input-group-text bg-dark text-light">Price: </span>
           </div>
-          <input type="number" name="price" id="price" class="form-control" placeholder="9999" required>
+          <input type="number" name="price" min="0" id="price" class="form-control" placeholder="9999" required>
         </div>
 
         <div class="input-group col-md-4 p-0">
           <div class="input-group-prepend">
             <span class="input-group-text bg-dark text-light">Amount: </span>
           </div>
-          <input type="number" name="amount" id="amount" class="form-control" placeholder="1" required>
+          <input type="number" name="amount" min="1" id="amount" class="form-control" placeholder="1" required>
         </div>
 
         <div class="input-group col-md-4 p-0">

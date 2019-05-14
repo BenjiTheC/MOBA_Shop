@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 //can add limit for image here
 
 router.get("/", isAuthenticated, async (req, res) => {
-  console.log("in GET /items");
+  // console.log("in GET /items");
   try {
     return res.render("sellItem", {
       userInfo: req.session.user,
@@ -36,22 +36,22 @@ router.post(
   isAuthenticated,
   upload.single("itemimage"),
   async (req, res) => {
-    console.log("in POST /item");
+    // console.log("in POST /item");
     //const itemInfo = req.body;
-      const itemInfo = {
-          name: xss(req.body.name),
-          description: xss(req.body.description),
-          price: xss(req.body.price),
-          amount: xss(req.body.amount),
-          tag: xss(req.body.tag)
-      }
-    console.log(itemInfo);
-    console.log(req.file.path);
+    const itemInfo = {
+      name: xss(req.body.name),
+      description: xss(req.body.description),
+      price: xss(req.body.price),
+      amount: xss(req.body.amount),
+      tag: xss(req.body.tag)
+    };
+    // console.log(itemInfo);
+    // console.log(req.file.path);
 
     const ownerId = req.session.user.userId; // middleware iiAuthenticated make sure we can get access of the user in the route
     const tag = itemInfo.tag;
     delete itemInfo.tag;
-    console.log(tag);
+    // console.log(tag);
     itemInfo.image = req.file.path.replace(/\\/g, "/"); // get the path
 
     try {
@@ -73,10 +73,10 @@ router.post(
 );
 
 router.get("/:id", async (req, res) => {
-  console.log(`in GET /items/${req.params.id}`);
+  // console.log(`in GET /items/${req.params.id}`);
   try {
     const item = await itemData.getItemWithOwnerAndCon(req.params.id);
-    console.log(item);
+    // console.log(item);
     res.render("itemDetail", {
       item: item,
       userInfo: req.session.user,
@@ -91,12 +91,12 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/tag/:tag", async (req, res) => {
-  console.log(`in GET /tag/${req.params.tag}`);
+  // console.log(`in GET /tag/${req.params.tag}`);
 
   let matchedItems;
   try {
     matchedItems = await itemData.getItemsByTag(req.params.tag);
-    console.log(`got ${matchedItems.length} items`);
+    // console.log(`got ${matchedItems.length} items`);
   } catch (e) {
     console.log(e);
     return res.status(500).render("error", {

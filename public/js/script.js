@@ -11,9 +11,6 @@ function addToCart(combinedId) {
   );
 }
 
-// itemInCart: req.session.cart.length,
-// userAsset: user.userAsset
-
 const placeOrder = event => {
   const totalPriceStr = $("#total-price")[0].innerText;
   const total = totalPriceStr.split(" ")[0];
@@ -25,8 +22,11 @@ const placeOrder = event => {
       const userAsset = data.userAsset;
       $("#items-in-cart").html(data.itemInCart);
       $("#user-asset").html(data.userAsset);
-      $("#place-order").attr("class", "btn btn-lg btn-success text-light mb-3");
-      $("#place-order").html("You order has been placed!");
+      const placeOrderBtn = $("#place-order");
+      placeOrderBtn.attr("class", "btn btn-lg btn-success mb-3");
+      placeOrderBtn.html("You order has been placed!");
+      placeOrderBtn.attr("onclick", "");
+      placeOrderBtn.css("color", "#000");
     },
     "json"
   );

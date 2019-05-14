@@ -8,7 +8,7 @@ const xss = require("xss");
 
 router.get("/:id", async (req, res) => {
   try {
-    console.log(`in GET /users/${req.params.id}`);
+    // console.log(`in GET /users/${req.params.id}`);
     const userId = req.params.id;
 
     const user = await userData.getUserById(userId);
