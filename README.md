@@ -2,6 +2,8 @@
 
 Final project for 19Spring CS-546 of Stevens Institute of Technology
 
+GitHub Repository: [https://github.com/BenjiTheC/MOBA_Shop](https://github.com/BenjiTheC/MOBA_Shop)
+
 ## Instruction
 
 We have all of the images the database needed store in [seed/](seed/) directory. The seeding script is in the same directory. Below is the steps to run the server of the website.
