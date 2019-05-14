@@ -4,20 +4,7 @@ const router = express.Router();
 const data = require("../data");
 const userData = data.users;
 const itemData = data.items;
-
-// router.get("/", async (req, res) => {
-//   try {
-//     const userList = await userData.getAllUsers();
-//     //to be implemented
-//     //...
-//     //res.render()
-
-//     res.json(userList);
-//   } catch (e) {
-//     res.sendStatus(500);
-//     return;
-//   }
-// });
+const xss = require("xss");
 
 router.get("/:id", async (req, res) => {
   try {
@@ -56,47 +43,47 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  const inputInfo = req.body;
+// router.put("/:id", async (req, res) => {
+//   const inputInfo = req.body;
+//
+//   if (!inputInfo) {
+//     res.status(400).json({ error: "You must provide data to update a user" });
+//     return;
+//   }
+//   if (
+//     !inputInfo.userInfo.nickName &&
+//     !inputInfo.userInfo.phone &&
+//     !inputInfo.userInfo.age &&
+//     !inputInfo.userInfo.gender &&
+//     !inputInfo.email
+//   ) {
+//     res.status(400).json({
+//       error: "you must provide a name or address or email to be updated"
+//     });
+//     return;
+//   }
+//   try {
+//     await userData.getUserById(req.params.id);
+//   } catch (e) {
+//     res.status(404).json({ error: "User not found" });
+//     return;
+//   }
+//   try {
+//     const updatedUser = await userData.updateUser(req.params.id, inputInfo);
+//     //to be implemented
+//
+//     res.json(updatedUser);
+//   } catch (e) {
+//     res.sendStatus(500);
+//   }
+// });
 
-  if (!inputInfo) {
-    res.status(400).json({ error: "You must provide data to update a user" });
-    return;
-  }
-  if (
-    !inputInfo.userInfo.nickName &&
-    !inputInfo.userInfo.phone &&
-    !inputInfo.userInfo.age &&
-    !inputInfo.userInfo.gender &&
-    !inputInfo.email
-  ) {
-    res.status(400).json({
-      error: "you must provide a name or address or email to be updated"
-    });
-    return;
-  }
-  try {
-    await userData.getUserById(req.params.id);
-  } catch (e) {
-    res.status(404).json({ error: "User not found" });
-    return;
-  }
-  try {
-    const updatedUser = await userData.updateUser(req.params.id, inputInfo);
-    //to be implemented
-
-    res.json(updatedUser);
-  } catch (e) {
-    res.sendStatus(500);
-  }
-});
 // router.delete("/:id", async (req, res) => {
 //   try {
 //     await userData.getUserById(req.params.id);
 //   } catch (e) {
 //     res.status(404).json({ error: "User not found" });
 //   }
-
 //   try {
 //     const user = await userData.getUserById(req.params.id);
 //     //to be implemented

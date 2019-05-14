@@ -4,6 +4,7 @@ const data = require("../data");
 const userData = data.users;
 const itemData = data.items;
 const { isAuthenticated } = require("../middlewares");
+const xss = require("xss");
 
 const getItemObjOfCart = async cart => {
   const itemsObjInCart = [];
@@ -26,7 +27,11 @@ router.post("/", async (req, res) => {
   if (!req.session.cart) req.session.cart = []; // make a new cart if there is not cart/cart empty
 
   const cart = req.session.cart;
-  const ids = req.body;
+  //const ids = req.body;
+    const ids = {
+        itemId: xss(req.body.itemId),
+        ownerId: xss(req.body.ownerId)
+    }
 
   if (!cart.includes(ids.itemId)) cart.push(ids.itemId);
 
@@ -91,7 +96,7 @@ router.get("/purchase", isAuthenticated, async (req, res) => {
 router.post("/purchase", isAuthenticated, async (req, res) => {
   console.log("in POST /purchase"); // this route will be hitted by ajax
   const updateObj = {}; // update data pass into the data module
-  const total = parseInt(req.body.total);
+  const total = parseInt(xss(req.body.total));
   const user = req.session.user;
   const cart = req.session.cart;
   const itemsObjInCart = await getItemObjOfCart(cart); //not necessary an array of objects, can be optimized
