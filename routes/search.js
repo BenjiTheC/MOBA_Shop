@@ -5,7 +5,7 @@ const data = require("../data");
 const itemData = data.items;
 
 router.get("/", async (req, res) => {
-  console.log("in GET /search");
+  // console.log("in GET /search");
   if (!req.query.searchKeyword)
     return res
       .status(400)

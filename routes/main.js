@@ -4,7 +4,7 @@ const data = require("../data");
 const itemData = data.items;
 
 router.get("/", async (req, res) => {
-  console.log("in GET /");
+  // console.log("in GET /");
   if (!req.session.cart) req.session.cart = []; // initiate the cart, just in case
   const num = 30; //nubmer of items display in the home page can be changed here
   const itemList = await itemData.getNewestItemForMain(num);

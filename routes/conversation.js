@@ -11,13 +11,13 @@ const xss = require("xss");
 //post /conversation?itemId=asdasd&posterId=111111
 // need to check all the id are valid
 router.post("/", async (req, res) => {
-  console.log("in POST /conversation route");
-  console.log(req.body);
+  // console.log("in POST /conversation route");
+  // console.log(req.body);
 
   //const { itemId, posterId, comment } = req.body;
-    const itemId = xss(req.body.itemId);
-    const posterId = xss(req.body.posterId);
-    const comment = xss(req.body.comment);
+  const itemId = xss(req.body.itemId);
+  const posterId = xss(req.body.posterId);
+  const comment = xss(req.body.comment);
 
   const newCon = await conData.addCon(itemId, posterId, comment);
 
@@ -28,12 +28,12 @@ router.post("/", async (req, res) => {
 //put /conversation?conId=5cd5e21a5b790335a449dd9a&posterId=5cd4edf21678de34c00b4c5e
 // need to check all the id are valid
 router.put("/", async (req, res) => {
-  console.log("in add reply route");
+  // console.log("in add reply route");
 
   //const { conId, posterId, comment } = req.body;
-    const conId = xss(req.body.conId);
-    const posterId = xss(req.body.posterId);
-    const comment = xss(req.body.comment);
+  const conId = xss(req.body.conId);
+  const posterId = xss(req.body.posterId);
+  const comment = xss(req.body.comment);
 
   try {
     const updatedCon = await conData.addReply(conId, comment, posterId);

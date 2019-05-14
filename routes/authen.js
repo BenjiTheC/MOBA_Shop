@@ -7,14 +7,14 @@ const xss = require("xss");
 const saltRounds = 5;
 
 router.get("/login", async (req, res) => {
-  console.log("in GET /authen/login");
+  // console.log("in GET /authen/login");
 
   return res.render("login", {});
 });
 
 router.post("/login", async (req, res) => {
-  console.log("in POST /authen/login");
-  console.log(req.body);
+  // console.log("in POST /authen/login");
+  // console.log(req.body);
 
   const username = xss(req.body.userAccount);
 
@@ -54,19 +54,19 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/signup", async (req, res) => {
-  console.log("in GET /authen/signup");
+  // console.log("in GET /authen/signup");
 
   return res.render("signup", {});
 });
 
 router.post("/signup", async (req, res) => {
-  console.log("in POST /authen/signup");
+  // console.log("in POST /authen/signup");
   //const { username, password, confirmPassword, phone, email } = req.body;
-    const username = xss(req.body.username);
-    const password = xss(req.body.password);
-    const confirmPassword = xss(req.body.confirmPassword);
-    const phone = xss(req.body.phone);
-    const email = xss(req.body.email);
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
+  const confirmPassword = xss(req.body.confirmPassword);
+  const phone = xss(req.body.phone);
+  const email = xss(req.body.email);
 
   for (let i = 0; i < username.length; i++) {
     if (
@@ -159,7 +159,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-  console.log("in GET /authen/logout");
+  // console.log("in GET /authen/logout");
 
   req.session.destroy();
 

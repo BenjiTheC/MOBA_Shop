@@ -1,5 +1,5 @@
 <section class="container row my-md-2 mx-auto" id="home-page">
-
+  <h1 class="sr-only">Home page with newest items listed</h1>
   <div class="col-md-8 col-12 mx-0" id="items-grid">
 
     <div class="row">
@@ -11,7 +11,7 @@
           </a>
           <div class="card-body p-2">
             <a href="/items/{{this.itemId}}" style="color: inherit">
-              <h6 class="card-title my-1">{{this.itemName}}</h6>
+              <p class="card-title my-1">{{this.itemName}}</p>
             </a>
             <p class="card-text my-1">{{this.itemPrice}} <span class="badge badge-pill badge-dark">MBCoin</span></p>
             <button class="btn btn-dark btn-sm border-light col" id="{{this.itemId}}|{{this.ownerId}}"

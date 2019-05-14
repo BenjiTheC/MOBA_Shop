@@ -7,7 +7,12 @@ function isLoggedIn(req, res, next) {
 }
 
 function myLogger(req, res, next) {
-  console.log(`[${new Date().toUTCString()}] ${req.method} ${req.originalUrl}`);
+  const userAuth = req.session.user
+    ? "[Authenticated User]"
+    : "[Non-authenticated User]";
+  console.log(
+    `[${new Date().toUTCString()}] ${req.method} ${req.originalUrl} ${userAuth}`
+  );
   next();
 }
 

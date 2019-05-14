@@ -25,8 +25,10 @@
 
         {{!-- MOBA SHOP LOGO --}}
         <div class="navbar-header">
-          <a class="navbar-brand mx-auto" href="/"><img src="/public/img/logo.png" alt=""
-              style="width:145px;height:auto"></a>
+          <a class="navbar-brand mx-auto" href="/">
+            <img src="/public/img/logo.png" alt="MOBAShopLogoImg" style="width:145px;height:auto">
+            <p class="text-light sr-only">Link to home page</p>
+          </a>
         </div>
 
         {{!-- Toggler when the screen is small --}}
@@ -44,7 +46,9 @@
               <input class="form-control border-white" type="search" placeholder="Search" aria-label="Search"
                 name="searchKeyword" required>
               <div class="input-group-append">
-                <button class="btn btn-outline-light icon-class" type="submit"><i class="fa fa-search"></i></button>
+                <label for="serach-btn" class="text-light sr-only">Search by key word</label>
+                <button id="serach-btn" class="btn btn-outline-light icon-class" type="submit"><i
+                    class="fa fa-search"></i></button>
               </div>
             </div>
           </form>
@@ -55,11 +59,13 @@
             <li class="nav-item">
               <a class="nav-link text-light icon-class" href="/users/{{userInfo.userId}}">
                 <i class="fas fa-user-alt"></i>
+                <p class="text-light sr-only">User Info</p>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-light icon-class" href="/authen/logout">
                 <i class="fas fa-sign-out-alt"></i>
+                <p class="text-light sr-only">Log out</p>
               </a>
             </li>
             {{else}}
