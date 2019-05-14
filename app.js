@@ -27,5 +27,5 @@ configRoutes(app);
 
 app.listen(3000, () => {
   console.log("MOBA shop web app server running");
-  console.log("Routes on "); // the url will be changed in the future
+  console.log("Routes on http://localhost:3000/");
 });
